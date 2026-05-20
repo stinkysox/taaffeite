@@ -117,7 +117,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} antialiased selection:bg-yellow-600/30 font-sans`}
+        className={`${inter.variable} ${playfair.variable} antialiased selection:bg-gold-600/30 font-sans`}
         suppressHydrationWarning
       >
         <CustomCursor />

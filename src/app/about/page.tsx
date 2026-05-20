@@ -8,203 +8,235 @@ import { siteContent } from "../../data/siteContent";
 
 export default function About() {
   const [isImageFocused, setIsImageFocused] = useState(false);
+
   const { about } = siteContent;
 
+  const easeCustom = [0.22, 1, 0.36, 1];
+
   return (
-    <div className="pt-32 pb-24 overflow-hidden">
-      {/* Hero Section */}
-      <SectionWrapper className="max-w-5xl mx-auto px-6 text-center mb-32">
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
+    <div className="bg-[#faf8f4] text-[#111] pt-36 pb-32 overflow-hidden selection:bg-[#111] selection:text-white">
+      {/* Ambient Luxury Glow */}
+      <div className="fixed top-[-15%] right-[-10%] w-[700px] h-[700px] rounded-full bg-[#d4af37]/10 blur-[140px] pointer-events-none" />
+
+      {/* HERO */}
+      <SectionWrapper className="max-w-[1440px] mx-auto px-6 md:px-12 text-center mb-48 relative z-10">
+        <div className="overflow-hidden mb-8">
+          <motion.span
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            transition={{
+              duration: 1,
+              ease: easeCustom,
+            }}
+            className="text-[10px] uppercase tracking-[0.55em] text-zinc-400 font-medium block"
+          >
+            {about.hero.label}
+          </motion.span>
+        </div>
+
+        <div className="overflow-hidden">
+          <motion.h1
+            initial={{ y: 160 }}
+            animate={{ y: 0 }}
+            transition={{
+              duration: 1.8,
+              ease: easeCustom,
+            }}
+            className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-serif leading-[0.86] tracking-[-0.07em] text-[#111]"
+          >
+            {about.hero.title}
+
+            <span className="italic font-light text-[#c6a769] block">
+              {about.hero.titleAccent}
+            </span>
+          </motion.h1>
+        </div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="premium-label mb-6 block"
+          transition={{
+            delay: 0.5,
+            duration: 1.2,
+            ease: easeCustom,
+          }}
+          className="mt-14 text-lg md:text-xl max-w-3xl mx-auto leading-[1.9] text-zinc-500 font-light"
         >
-          {about.hero.label}
-        </motion.span>
-        <h1 className="text-6xl md:text-9xl font-serif mb-10 leading-[0.85] tracking-tighter text-white">
-          {about.hero.title} <br />
-          <span className="italic">{about.hero.titleAccent}</span>
-        </h1>
-        <p className="premium-para text-xl md:text-2xl max-w-3xl mx-auto italic font-medium !text-zinc-300">
           {about.hero.description}
-        </p>
+        </motion.p>
       </SectionWrapper>
 
-      {/* Philosophy Section */}
-      <section className="max-w-7xl mx-auto px-6 mb-48">
-        <div className="grid md:grid-cols-2 gap-24 items-center">
-          <SectionWrapper direction="left">
-            <motion.div
-              onClick={() => setIsImageFocused(!isImageFocused)}
-              onMouseEnter={() => setIsImageFocused(true)}
-              onMouseLeave={() => setIsImageFocused(false)}
-              className="aspect-[3/4] rounded-[3rem] overflow-hidden shadow-2xl relative cursor-pointer"
-            >
-              <motion.img
-                animate={{
-                  filter: isImageFocused ? "grayscale(0%)" : "grayscale(100%)",
-                  scale: isImageFocused ? 1.05 : 1,
-                }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-                src={about.philosophy.image}
-                alt="Architecture"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
-
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 md:hidden">
-                <motion.p
-                   animate={{ opacity: isImageFocused ? 0 : 1 }}
-                  className="text-[8px] uppercase tracking-widest text-white/50 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full"
-                >
-                  Tap to reveal color
-                </motion.p>
-              </div>
-            </motion.div>
-          </SectionWrapper>
-
-          <SectionWrapper direction="right">
-            <h2 className="text-4xl md:text-6xl font-serif mb-8 leading-tight text-white">
-              {about.philosophy.title} <br />
-              {about.philosophy.titleAccent}
-            </h2>
-            <p className="premium-para text-lg mb-8">
-              {about.philosophy.text1}
-            </p>
-            <p className="premium-para text-lg">
-              {about.philosophy.text2}
-            </p>
-
-            <div className="mt-12 flex gap-8 border-t border-white/10 pt-12">
-              {about.philosophy.stats.map((stat, i) => (
-                <div key={i}>
-                  <p className="text-3xl font-serif italic mb-1">{stat.value}</p>
-                  <p className="text-[10px] uppercase tracking-widest text-gray-400">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </SectionWrapper>
-        </div>
-      </section>
-
-      {/* The Pillars */}
-      <section className="py-32 bg-white/5 rounded-[5rem] mx-4 mb-48">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionWrapper className="text-center mb-24">
-            <h2 className="text-4xl md:text-7xl font-serif mb-6 text-white">
-              {about.pillars.title}
-            </h2>
-            <p className="premium-label italic">
-              {about.pillars.label}
-            </p>
-          </SectionWrapper>
-
-          <div className="grid md:grid-cols-3 gap-12">
-            {about.pillars.items.map((pillar, i) => (
-              <SectionWrapper key={i} delay={i * 0.15}>
-                <motion.div
-                  whileHover={{
-                    y: -10,
-                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+      {/* PHILOSOPHY */}
+      <section className="max-w-[1440px] mx-auto px-6 md:px-12 mb-56 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-20 lg:gap-28 items-center">
+          {/* IMAGE */}
+          <div className="lg:col-span-5">
+            <SectionWrapper direction="left">
+              <motion.div
+                onClick={() =>
+                  setIsImageFocused((prev) => !prev)
+                }
+                onMouseEnter={() =>
+                  setIsImageFocused(true)
+                }
+                onMouseLeave={() =>
+                  setIsImageFocused(false)
+                }
+                className="relative aspect-[3/4] w-full overflow-hidden rounded-[2.5rem] bg-[#f5f3ef] cursor-pointer group shadow-[0_20px_80px_rgba(0,0,0,0.08)]"
+              >
+                {/* Image */}
+                <motion.img
+                  animate={{
+                    scale: isImageFocused ? 1.06 : 1,
+                    filter: isImageFocused
+                      ? "grayscale(0%)"
+                      : "grayscale(100%)",
                   }}
-                  whileTap={{ scale: 0.98 }}
-                  className="p-12 glass rounded-[3rem] border border-white/10 h-full transition-colors duration-500 cursor-pointer"
+                  transition={{
+                    duration: 1.5,
+                    ease: easeCustom,
+                  }}
+                  src={about.story.image}
+                  alt="Story Visual"
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Cinematic Overlay */}
+                <motion.div
+                  animate={{
+                    opacity: isImageFocused ? 0.08 : 0.42,
+                  }}
+                  transition={{
+                    duration: 1,
+                  }}
+                  className="absolute inset-0 bg-black"
+                />
+
+                {/* Editorial Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-white/10 pointer-events-none" />
+
+                {/* Luxury Glow */}
+                <motion.div
+                  animate={{
+                    opacity: isImageFocused ? 1 : 0,
+                    scale: isImageFocused ? 1 : 0.7,
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    ease: easeCustom,
+                  }}
+                  className="absolute -bottom-28 left-1/2 -translate-x-1/2 w-[70%] h-[150px] rounded-full bg-[#d4af37]/25 blur-[100px]"
+                />
+
+                {/* Floating Label */}
+                <motion.div
+                  animate={{
+                    y: isImageFocused ? 0 : 10,
+                    opacity: isImageFocused ? 1 : 0.75,
+                    scale: isImageFocused ? 1 : 0.96,
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    ease: easeCustom,
+                  }}
+                  className="absolute bottom-8 left-8"
                 >
-                  <h4 className="text-3xl font-serif italic mb-6 text-yellow-600">
-                    {pillar.title}
-                  </h4>
-                  <p className="premium-para !text-zinc-400">
-                    {pillar.desc}
-                  </p>
+                  <div className="backdrop-blur-2xl bg-white/10 border border-white/20 rounded-full px-5 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.15)]">
+                    <span className="text-[9px] uppercase tracking-[0.38em] text-white font-medium">
+                      {isImageFocused
+                        ? "Emotion In Motion"
+                        : "Tap To Reveal"}
+                    </span>
+                  </div>
                 </motion.div>
-              </SectionWrapper>
-            ))}
+
+                {/* Edge Highlight */}
+                <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-white/10 pointer-events-none" />
+
+                {/* Floating Light Sweep */}
+                <motion.div
+                  animate={{
+                    x: isImageFocused ? 30 : -30,
+                    opacity: isImageFocused ? 0.5 : 0.15,
+                  }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    ease: "easeInOut",
+                  }}
+                  className="absolute top-0 left-[-20%] w-[40%] h-full bg-white/10 blur-[60px] rotate-12"
+                />
+              </motion.div>
+            </SectionWrapper>
+          </div>
+
+          {/* TEXT */}
+          <div className="lg:col-span-7">
+            <SectionWrapper direction="right">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif mb-12 leading-[1] tracking-[-0.05em] text-[#111]">
+                {about.story.title}
+
+                <span className="italic font-light text-[#c6a769] block mt-3">
+                  {about.story.titleAccent}
+                </span>
+              </h2>
+
+              <div className="space-y-8 max-w-2xl text-zinc-500 font-light text-base md:text-lg leading-[1.9]">
+                <p>{about.story.text1}</p>
+                <p>{about.story.text2}</p>
+              </div>
+
+              {/* Stats */}
+              <div className="mt-20 grid grid-cols-3 gap-8 border-t border-black/5 pt-10 max-w-lg">
+                {about.story.stats.map((stat, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{
+                      y: -4,
+                    }}
+                    className="flex flex-col gap-3"
+                  >
+                    <p className="text-3xl md:text-4xl font-serif text-[#111]">
+                      {stat.value}
+                    </p>
+
+                    <p className="text-[9px] uppercase tracking-[0.35em] text-zinc-400 font-medium leading-none">
+                      {stat.label}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </SectionWrapper>
           </div>
         </div>
       </section>
 
-      {/* The Archive Grid */}
-      <section className="max-w-7xl mx-auto px-6 mb-48">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <SectionWrapper direction="left" className="order-2 md:order-1">
-            <h2 className="text-4xl md:text-6xl font-serif mb-8 leading-tight italic text-white">
-              {about.archive.title}
-            </h2>
-            <div className="space-y-12">
-              {about.archive.items.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0.5 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ amount: 0.8 }}
-                  className="flex gap-8 group cursor-default"
-                >
-                  <span className="text-2xl font-serif italic text-yellow-600/40 group-hover:text-yellow-600 transition-colors">
-                    {item.step}
-                  </span>
-                  <div>
-                    <h4 className="text-xl font-serif mb-2 tracking-tight text-white">
-                      {item.title}
-                    </h4>
-                    <p className="premium-para text-sm">
-                      {item.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </SectionWrapper>
-
-          <SectionWrapper direction="right" className="order-1 md:order-2">
-            <div className="grid grid-cols-2 gap-4">
-              <motion.div
-                whileInView={{ y: 0, opacity: 1 }}
-                initial={{ y: 40, opacity: 0 }}
-                transition={{ duration: 1, delay: 0.2 }}
-                className="aspect-[4/5] rounded-[2rem] overflow-hidden translate-y-12 shadow-xl"
-              >
-                <img
-                  src={about.archive.images[0]}
-                  alt="Detail 1"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-              <motion.div
-                whileInView={{ y: 0, opacity: 1 }}
-                initial={{ y: -40, opacity: 0 }}
-                transition={{ duration: 1, delay: 0.4 }}
-                className="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl"
-              >
-                <img
-                  src={about.archive.images[1]}
-                  alt="Detail 2"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            </div>
-          </SectionWrapper>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <SectionWrapper className="text-center px-6">
-        <h2 className="text-4xl md:text-7xl font-serif mb-12 italic text-white">
+      {/* CTA */}
+      <SectionWrapper className="text-center max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+        <h2 className="text-5xl sm:text-6xl md:text-7xl font-serif mb-16 tracking-[-0.04em] max-w-5xl mx-auto leading-[0.95] text-[#111]">
           {about.cta.title}
         </h2>
-        <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+
+        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           <Link
             href={about.cta.primaryLink}
-            className="px-12 py-5 rounded-full bg-yellow-600 text-white uppercase tracking-[0.2em] text-[10px] font-bold shadow-lg active:scale-95 transition-transform"
+            className="group relative inline-flex items-center justify-center px-12 py-5 bg-[#111] rounded-full overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] w-full sm:w-auto"
           >
-            {about.cta.primaryButton}
+            <div className="absolute inset-0 bg-[#c6a769] scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-700 ease-[0.22,1,0.36,1]" />
+
+            <span className="relative z-10 text-[10px] uppercase tracking-[0.35em] text-white group-hover:text-[#111] transition-colors duration-500 font-medium">
+              {about.cta.primaryButton}
+            </span>
           </Link>
+
           <Link
             href={about.cta.secondaryLink}
-            className="px-12 py-5 rounded-full border border-white/10 uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-white/5 active:scale-95 transition-all text-white"
+            className="group relative inline-flex items-center justify-center px-12 py-5 border border-zinc-200 hover:border-[#111] rounded-full overflow-hidden transition-all duration-500 hover:bg-white active:scale-[0.98] w-full sm:w-auto"
           >
-            {about.cta.secondaryButton}
+            <span className="relative z-10 text-[10px] uppercase tracking-[0.35em] text-[#111] font-medium">
+              {about.cta.secondaryButton}
+            </span>
           </Link>
         </div>
       </SectionWrapper>

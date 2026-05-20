@@ -9,10 +9,11 @@ import { MagneticButton } from "../components/MagneticButton";
 import Image from "next/image";
 import { siteContent } from "../data/siteContent";
 import { TextReveal } from "../components/TextReveal";
+import PremiumHero from "../components/PremiumHero";
 
 const AuroraBackground = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-60 dark:opacity-40">
-    <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-yellow-400/20 dark:bg-yellow-900/30 rounded-full aurora-blob" />
+    <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-gold-400/20 dark:bg-gold-900/30 rounded-full aurora-blob" />
     <div
       className="absolute bottom-[-15%] right-[-5%] w-[70%] h-[70%] bg-orange-400/20 dark:bg-orange-950/25 rounded-full aurora-blob"
       style={{ animationDelay: "-8s" }}
@@ -21,7 +22,7 @@ const AuroraBackground = () => (
       className="absolute top-[10%] right-[5%] w-[60%] h-[60%] bg-rose-400/15 dark:bg-rose-900/20 rounded-full aurora-blob"
       style={{ animationDelay: "-15s" }}
     />
-    <div className="absolute inset-0 bg-white/10 dark:bg-black/20 backdrop-blur-[4px]" />
+    <div className="absolute inset-0 bg-black/10 /20 backdrop-blur-[4px]" />
   </div>
 );
 
@@ -32,78 +33,21 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      {/* Aurora Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <AuroraBackground />
-
-        <motion.div
-          style={{ y: heroContentY }}
-          className="relative z-10 text-center px-6"
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl sm:text-7xl md:text-9xl font-serif text-white mb-8 tracking-tighter leading-[1.1] md:leading-none"
-          >
-            {home.hero.title} <br />
-            <span className="italic text-yellow-600 dark:text-yellow-500">
-              {home.hero.titleAccent}
-            </span>{" "}
-            {home.hero.titleEnd}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 1.5 }}
-            className="premium-label mb-12 px-4"
-          >
-            {home.hero.subtitle}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1.4, duration: 1 }}
-          >
-            <MagneticButton>
-              <Link
-                href={home.hero.ctaLink}
-                className="inline-block px-12 py-5 glass dark:text-white text-[#1A1A1A] rounded-full uppercase tracking-[0.2em] hover:bg-black/5 dark:hover:bg-white/10 transition-all text-[10px] font-bold glow-button border border-black/10 dark:border-white/10 shadow-lg magnetic-target"
-              >
-                {home.hero.cta}
-              </Link>
-            </MagneticButton>
-          </motion.div>
-        </motion.div>
-
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
-          <span className="text-[10px] text-gray-400 dark:text-white/40 uppercase tracking-[0.3em] vertical-text">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 15, 0], opacity: [0.2, 0.6, 0.2] }}
-            transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-            className="w-[1px] h-16 bg-gradient-to-b from-yellow-600 dark:from-white to-transparent"
-          />
-        </div>
-      </section>
-
+      <PremiumHero home={home} />
       {/* Intro Section */}
       <section className="py-40 px-6 max-w-7xl mx-auto overflow-hidden">
         <div className="grid md:grid-cols-2 gap-32 items-center">
           <SectionWrapper direction="left">
-            <h2 className="text-4xl md:text-7xl font-serif mb-10 leading-none tracking-tight text-white">
+            <h2 className="text-4xl md:text-7xl font-serif mb-10 leading-none tracking-tight text-[#1a1a1a]">
               {home.intro.title} <br />
-              <span className="text-yellow-600 italic">{home.intro.titleAccent}</span>
+              <span className="text-gold-600 italic">{home.intro.titleAccent}</span>
             </h2>
             <p className="premium-para mb-14 max-w-lg">
               {home.intro.description}
             </p>
             <Link
               href={home.intro.linkUrl}
-              className="group flex items-center gap-8 text-[10px] uppercase tracking-[0.4em] font-bold dark:text-white"
+              className="group flex items-center gap-8 text-[10px] uppercase tracking-[0.4em] font-bold dark:text-[#1a1a1a]"
             >
               {home.intro.linkText}
               <span className="w-20 h-[1px] bg-black dark:bg-white group-hover:w-32 transition-all duration-700"></span>
@@ -133,15 +77,15 @@ export default function Home() {
       {/* Why Us Cards */}
       <section className="py-40 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
-          {home.services.map((item, idx) => (
+          {home.servicesPreview.map((item, idx) => (
             <SectionWrapper key={idx} direction="up" delay={idx * 0.2}>
-              <div className="p-16 rounded-[3rem] glass border border-white/5 h-full flex flex-col items-center text-center group hover:bg-yellow-600/5 transition-all duration-700 shadow-sm hover:shadow-xl">
-                <div className="w-16 h-16 rounded-full border border-yellow-600/20 flex items-center justify-center mb-10 group-hover:bg-yellow-600 group-hover:text-white transition-all duration-500">
-                  <span className="font-serif italic text-2xl dark:text-white group-hover:text-white">
+              <div className="p-16 rounded-[3rem] glass border border-black/5 h-full flex flex-col items-center text-center group hover:bg-gold-600/5 transition-all duration-700 shadow-sm hover:shadow-xl">
+                <div className="w-16 h-16 rounded-full border border-gold-600/20 flex items-center justify-center mb-10 group-hover:bg-gold-600 group-hover:text-[#1a1a1a] transition-all duration-500">
+                  <span className="font-serif italic text-2xl dark:text-[#1a1a1a] group-hover:text-[#1a1a1a]">
                     {idx + 1}
                   </span>
                 </div>
-                <h3 className="text-3xl font-serif mb-6 italic tracking-tight text-white">
+                <h3 className="text-3xl font-serif mb-6 italic tracking-tight text-[#1a1a1a]">
                   {item.title}
                 </h3>
                 <p className="premium-para text-xs uppercase !leading-relaxed">
@@ -157,9 +101,9 @@ export default function Home() {
       <section className="pb-40 px-6 overflow-hidden">
         <SectionWrapper
           direction="up"
-          className="max-w-6xl mx-auto glass rounded-[5rem] p-12 md:p-24 border border-yellow-600/20 relative overflow-hidden shadow-2xl flex flex-col items-center text-center"
+          className="max-w-6xl mx-auto glass rounded-[5rem] p-12 md:p-24 border border-gold-600/20 relative overflow-hidden shadow-2xl flex flex-col items-center text-center"
         >
-          <div className="absolute top-0 right-0 p-16 opacity-[0.05] pointer-events-none text-yellow-600">
+          <div className="absolute top-0 right-0 p-16 opacity-[0.05] pointer-events-none text-gold-600">
             <svg
               width="300"
               height="300"
@@ -170,7 +114,7 @@ export default function Home() {
             </svg>
           </div>
 
-          <h2 className="text-5xl md:text-8xl font-serif mb-12 italic leading-none tracking-tighter text-[#1A1A1A] dark:text-white">
+          <h2 className="text-5xl md:text-8xl font-serif mb-12 italic leading-none tracking-tighter text-[#1A1A1A] dark:text-[#1a1a1a]">
             {home.finalCta.title}
           </h2>
 
@@ -182,7 +126,7 @@ export default function Home() {
             <MagneticButton distance={0.3} className="w-full sm:w-auto">
               <Link
                 href={home.finalCta.buttonLink}
-                className="block sm:inline-block px-10 md:px-16 py-6 md:py-7 rounded-full bg-yellow-600 text-white uppercase tracking-[0.4em] font-bold text-[9px] md:text-[10px] glow-button transition-all hover:scale-105 active:scale-95 magnetic-target text-center shadow-xl shadow-yellow-600/20"
+                className="block sm:inline-block px-10 md:px-16 py-6 md:py-7 rounded-full bg-gold-600 text-[#1a1a1a] uppercase tracking-[0.4em] font-bold text-[9px] md:text-[10px] glow-button transition-all hover:scale-105 active:scale-95 magnetic-target text-center shadow-xl shadow-gold-600/20"
               >
                 {home.finalCta.buttonText}
               </Link>

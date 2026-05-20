@@ -59,11 +59,11 @@ export default function Testimonials() {
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-yellow-600 uppercase tracking-[0.5em] text-[10px] font-bold mb-4"
+          className="text-gold-600 uppercase tracking-[0.5em] text-[10px] font-bold mb-4"
         >
           Reflections
         </motion.p>
-        <h2 className="text-6xl md:text-9xl font-serif text-white italic leading-none">
+        <h2 className="text-6xl md:text-9xl font-serif text-[#1a1a1a] italic leading-none">
           Kind Words.
         </h2>
       </SectionWrapper>
@@ -95,7 +95,7 @@ export default function Testimonials() {
                 className="glass rounded-[3rem] p-10 md:p-16 border relative overflow-hidden cursor-pointer"
               >
                 <div className="flex flex-col items-start gap-2 mb-10 relative z-10">
-                  <h3 className="text-2xl font-serif text-white">
+                  <h3 className="text-2xl font-serif text-[#1a1a1a]">
                     {review.name}
                   </h3>
                   <motion.p
@@ -120,7 +120,7 @@ export default function Testimonials() {
                     scale: isActive ? 1 : 0.8,
                     rotate: isActive ? 0 : -5,
                   }}
-                  className="absolute -bottom-8 -right-8 text-white pointer-events-none"
+                  className="absolute -bottom-8 -right-8 text-[#1a1a1a] pointer-events-none"
                 >
                   <svg
                     width="200"

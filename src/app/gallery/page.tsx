@@ -52,8 +52,8 @@ export default function Gallery() {
               }}
               className={`px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.4em] font-bold transition-all duration-500 border ${
                 filter === cat
-                  ? "bg-yellow-600 border-yellow-600 text-white shadow-xl shadow-yellow-600/20 scale-105"
-                  : "border-white/5 text-gray-400 hover:text-white hover:border-white/20"
+                  ? "bg-gold-600 border-gold-600 text-[#1a1a1a] shadow-xl shadow-gold-600/20 scale-105"
+                  : "border-black/5 text-gray-400 hover:text-[#1a1a1a] hover:border-black/20"
               }`}
             >
               {cat}
@@ -87,7 +87,7 @@ export default function Gallery() {
                       className="break-inside-avoid"
                     >
                       <div
-                        className="group relative overflow-hidden rounded-[2.5rem] glass-light border border-white/5 shadow-sm cursor-pointer"
+                        className="group relative overflow-hidden rounded-[2.5rem] glass-light border border-black/5 shadow-sm cursor-pointer"
                         onClick={() => handleItemInteraction(item.id, true)}
                         onMouseEnter={() =>
                           handleItemInteraction(item.id, false)
@@ -125,21 +125,21 @@ export default function Gallery() {
                           <div className="relative z-10">
                             <motion.p
                               animate={{ y: isActive ? 0 : 20 }}
-                              className="text-yellow-600 uppercase text-[9px] tracking-[0.6em] font-bold mb-4"
+                              className="text-gold-600 uppercase text-[9px] tracking-[0.6em] font-bold mb-4"
                             >
                               {item.category}
                             </motion.p>
                             <motion.h3
                               animate={{ y: isActive ? 0 : 20 }}
                               transition={{ delay: 0.05 }}
-                              className="text-3xl md:text-4xl font-serif text-white mb-5 italic leading-tight"
+                              className="text-3xl md:text-4xl font-serif text-[#1a1a1a] mb-5 italic leading-tight"
                             >
                               {item.title}
                             </motion.h3>
                             <motion.p
                               animate={{ y: isActive ? 0 : 20 }}
                               transition={{ delay: 0.1 }}
-                              className="text-white/80 text-[12px] md:text-sm leading-relaxed max-w-[280px] font-light italic"
+                              className="text-[#1a1a1a]/80 text-[12px] md:text-sm leading-relaxed max-w-[280px] font-light italic"
                             >
                               {item.description}
                             </motion.p>
@@ -161,14 +161,14 @@ export default function Gallery() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="flex flex-col items-center justify-center py-32 text-center"
               >
-                <div className="w-24 h-[1px] bg-yellow-600/30 mb-8" />
-                <h3 className="text-4xl md:text-5xl font-serif italic text-black dark:text-white mb-4">
+                <div className="w-24 h-[1px] bg-gold-600/30 mb-8" />
+                <h3 className="text-4xl md:text-5xl font-serif italic text-black dark:text-[#1a1a1a] mb-4">
                   Coming Soon
                 </h3>
                 <p className="text-gray-400 uppercase tracking-[0.4em] text-[10px] font-medium">
                   We are currently curating this collection
                 </p>
-                <div className="w-24 h-[1px] bg-yellow-600/30 mt-8" />
+                <div className="w-24 h-[1px] bg-gold-600/30 mt-8" />
               </motion.div>
             )}
           </AnimatePresence>

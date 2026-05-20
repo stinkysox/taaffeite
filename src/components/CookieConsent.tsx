@@ -47,16 +47,16 @@ export function CookieConsent() {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <div className="relative bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl rounded-xl shadow-2xl border border-zinc-200/50 dark:border-zinc-800/50">
+        <div className="relative bg-black/95 dark:bg-zinc-950/95 backdrop-blur-xl rounded-xl shadow-2xl border border-zinc-200/50 dark:border-zinc-800/50">
           <div className="p-4">
             {/* Compact header */}
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-yellow-600/10 flex items-center justify-center">
-                <svg className="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-7 h-7 rounded-lg bg-gold-600/10 flex items-center justify-center">
+                <svg className="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
-              <h4 className="text-sm font-serif italic text-zinc-900 dark:text-white">
+              <h4 className="text-sm font-serif italic text-zinc-900 dark:text-[#1a1a1a]">
                 Cookie Preferences
               </h4>
             </div>
@@ -66,7 +66,7 @@ export function CookieConsent() {
               We use cookies to improve your experience.{" "}
               <Link
                 href="/privacy-policy"
-                className="text-yellow-600 hover:text-yellow-500 font-medium underline decoration-yellow-600/30 underline-offset-2"
+                className="text-gold-600 hover:text-gold-500 font-medium underline decoration-gold-600/30 underline-offset-2"
               >
                 Learn more
               </Link>
@@ -74,7 +74,7 @@ export function CookieConsent() {
 
             {/* Premium toggle slider */}
             <div className="flex items-center justify-between gap-3 mb-3">
-              <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
+              <span className="text-xs font-medium text-zinc-700 dark:text-zinc-600">
                 {accepted ? "Accept Cookies" : "Decline Cookies"}
               </span>
               
@@ -82,7 +82,7 @@ export function CookieConsent() {
                 onClick={handleToggle}
                 className={`relative w-11 h-6 rounded-full transition-all duration-300 ${
                   accepted 
-                    ? "bg-gradient-to-r from-yellow-600 to-yellow-500 shadow-lg shadow-yellow-600/20" 
+                    ? "bg-gradient-to-r from-gold-600 to-gold-500 shadow-lg shadow-gold-600/20" 
                     : "bg-zinc-300 dark:bg-zinc-700"
                 }`}
               >
@@ -97,7 +97,7 @@ export function CookieConsent() {
             {/* Confirm button */}
             <button
               onClick={handleConfirm}
-              className="w-full py-2 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-xs font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+              className="w-full py-2 rounded-lg bg-zinc-900 dark:bg-white text-[#1a1a1a] dark:text-zinc-900 text-xs font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
             >
               Confirm Choice
             </button>

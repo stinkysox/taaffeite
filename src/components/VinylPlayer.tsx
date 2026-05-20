@@ -104,9 +104,9 @@ export const VinylPlayer: React.FC = () => {
           <div className="absolute inset-0 rounded-full bg-gradient-to-bl from-white/5 to-transparent pointer-events-none mix-blend-overlay" />
 
           {/* Label */}
-          <div className="absolute w-1/3 h-1/3 bg-yellow-600 rounded-full flex items-center justify-center shadow-lg border border-yellow-700/50">
+          <div className="absolute w-1/3 h-1/3 bg-gold-600 rounded-full flex items-center justify-center shadow-lg border border-gold-700/50">
              <div className="w-1.5 h-1.5 bg-black rounded-full" />
-             <div className="absolute inset-0 rounded-full border border-white/10" />
+             <div className="absolute inset-0 rounded-full border border-black/10" />
              <span className="text-[4px] text-black/60 font-serif uppercase tracking-widest absolute bottom-2">Side A</span>
           </div>
         </motion.div>

@@ -52,7 +52,7 @@ export const CustomCursor: React.FC = () => {
     <>
       {/* Main Cursor Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-3 h-3 bg-yellow-600 rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 w-3 h-3 bg-gold-600 rounded-full pointer-events-none z-[9999] mix-blend-difference"
         style={{
           x: cursorX,
           y: cursorY,
@@ -63,7 +63,7 @@ export const CustomCursor: React.FC = () => {
       
       {/* Expanding Ring */}
       <motion.div
-        className="fixed top-0 left-0 border border-yellow-600/50 rounded-full pointer-events-none z-[9998]"
+        className="fixed top-0 left-0 border border-gold-600/50 rounded-full pointer-events-none z-[9998]"
         animate={{
           width: cursorType === "hover" ? 60 : cursorType === "image" ? 100 : 30,
           height: cursorType === "hover" ? 60 : cursorType === "image" ? 100 : 30,
@@ -84,7 +84,7 @@ export const CustomCursor: React.FC = () => {
         <motion.span
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="fixed top-0 left-0 text-[10px] uppercase tracking-widest text-yellow-600 font-bold pointer-events-none z-[10000]"
+          className="fixed top-0 left-0 text-[10px] uppercase tracking-widest text-gold-600 font-bold pointer-events-none z-[10000]"
           style={{
             x: cursorX,
             y: cursorY,

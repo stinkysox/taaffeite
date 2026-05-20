@@ -76,8 +76,8 @@ export const HorizontalGallery: React.FC<HorizontalGalleryProps> = ({ items = DE
           className="absolute top-1/2 left-12 md:left-24 -translate-y-1/2 z-20 pointer-events-none"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-[1px] bg-yellow-600" />
-            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-yellow-600">
+            <div className="w-12 h-[1px] bg-gold-600" />
+            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-gold-600">
               Scroll to explore
             </span>
           </div>
@@ -87,7 +87,7 @@ export const HorizontalGallery: React.FC<HorizontalGalleryProps> = ({ items = DE
           {items.map((item, index) => (
             <div
               key={item.id}
-              className="group relative h-[60vh] md:h-[70vh] aspect-[4/5] flex-shrink-0 overflow-hidden rounded-3xl md:rounded-[3rem] bg-zinc-900 border border-white/5"
+              className="group relative h-[60vh] md:h-[70vh] aspect-[4/5] flex-shrink-0 overflow-hidden rounded-3xl md:rounded-[3rem] bg-zinc-900 border border-black/5"
             >
               <div className="absolute inset-0 shimmer opacity-20" />
               <Image
@@ -99,7 +99,7 @@ export const HorizontalGallery: React.FC<HorizontalGalleryProps> = ({ items = DE
               />
               <div className="absolute inset-x-0 bottom-0 p-8 md:p-12 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end">
                 <motion.span 
-                  className="text-[10px] uppercase tracking-[0.3em] text-yellow-500 font-bold mb-2"
+                  className="text-[10px] uppercase tracking-[0.3em] text-gold-500 font-bold mb-2"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
@@ -107,7 +107,7 @@ export const HorizontalGallery: React.FC<HorizontalGalleryProps> = ({ items = DE
                   {item.category}
                 </motion.span>
                 <motion.h3 
-                  className="text-3xl md:text-5xl font-serif text-white tracking-tight"
+                  className="text-3xl md:text-5xl font-serif text-[#1a1a1a] tracking-tight"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
@@ -121,8 +121,8 @@ export const HorizontalGallery: React.FC<HorizontalGalleryProps> = ({ items = DE
           {/* Ending Card / Call to Action */}
           <div className="h-[60vh] md:h-[70vh] aspect-[4/5] md:aspect-[1/1] flex-shrink-0 flex items-center justify-center p-6">
              <div className="text-center">
-                <h3 className="text-3xl md:text-6xl font-serif text-white mb-8 italic leading-tight">And many more stories...</h3>
-                <a href="/gallery" className="premium-label border border-white/20 px-8 py-4 rounded-full hover:bg-white/10 transition-colors inline-block">
+                <h3 className="text-3xl md:text-6xl font-serif text-[#1a1a1a] mb-8 italic leading-tight">And many more stories...</h3>
+                <a href="/gallery" className="premium-label border border-black/20 px-8 py-4 rounded-full hover:bg-black/10 transition-colors inline-block">
                     View Full Archive
                 </a>
              </div>
@@ -130,10 +130,10 @@ export const HorizontalGallery: React.FC<HorizontalGalleryProps> = ({ items = DE
         </motion.div>
 
         {/* Progress Bar Container */}
-        <div className="absolute bottom-12 left-12 md:left-24 right-12 md:right-24 h-[1px] bg-white/10 overflow-hidden">
+        <div className="absolute bottom-12 left-12 md:left-24 right-12 md:right-24 h-[1px] bg-black/10 overflow-hidden">
           <motion.div 
             style={{ width: progressWidth }}
-            className="h-full bg-yellow-600 shadow-[0_0_10px_rgba(202,138,4,0.5)]"
+            className="h-full bg-gold-600 shadow-[0_0_10px_rgba(202,138,4,0.5)]"
           />
         </div>
       </div>

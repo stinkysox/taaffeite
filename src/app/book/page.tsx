@@ -17,12 +17,12 @@ export default function Book() {
   return (
     <div className="relative pt-32 pb-24 px-6 overflow-hidden">
       {/* Background Soft Glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-500/5 blur-[120px] rounded-full" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-500/5 blur-[120px] rounded-full" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/5 blur-[120px] rounded-full" />
 
       <div className="max-w-4xl mx-auto relative z-10">
         <SectionWrapper direction="up" className="text-center mb-16">
-          <h1 className="text-5xl md:text-7xl font-serif mb-6 text-white">
+          <h1 className="text-5xl md:text-7xl font-serif mb-6 text-[#1a1a1a]">
             {book.hero.title}
           </h1>
           <p className="premium-label italic">
@@ -31,7 +31,7 @@ export default function Book() {
         </SectionWrapper>
 
         <SectionWrapper direction="up" delay={0.2}>
-          <div className="glass rounded-[2rem] p-8 md:p-16 border border-white/10 shadow-2xl">
+          <div className="glass rounded-[2rem] p-8 md:p-16 border border-black/10 shadow-2xl">
             <AnimatePresence mode="wait">
               {!submitted ? (
                 <motion.form
@@ -51,7 +51,7 @@ export default function Book() {
                         required
                         type="text"
                         placeholder="John Doe"
-                        className="w-full bg-transparent border-b border-white/20 py-4 focus:border-yellow-600 outline-none transition-colors text-white placeholder:text-gray-700"
+                        className="w-full bg-transparent border-b border-black/20 py-4 focus:border-gold-600 outline-none transition-colors text-[#1a1a1a] placeholder:text-gray-700"
                       />
                     </div>
                     <div className="space-y-2">
@@ -62,7 +62,7 @@ export default function Book() {
                         required
                         type="email"
                         placeholder="john@example.com"
-                        className="w-full bg-transparent border-b border-white/20 py-4 focus:border-yellow-600 outline-none transition-colors text-white placeholder:text-gray-700"
+                        className="w-full bg-transparent border-b border-black/20 py-4 focus:border-gold-600 outline-none transition-colors text-[#1a1a1a] placeholder:text-gray-700"
                       />
                     </div>
                   </div>
@@ -75,7 +75,7 @@ export default function Book() {
                       <input
                         required
                         type="date"
-                        className="w-full bg-transparent border-b border-white/20 py-4 focus:border-yellow-600 outline-none transition-colors text-white [color-scheme:dark]"
+                        className="w-full bg-transparent border-b border-black/20 py-4 focus:border-gold-600 outline-none transition-colors text-[#1a1a1a] [color-scheme:dark]"
                       />
                     </div>
                     <div className="space-y-2">
@@ -83,12 +83,12 @@ export default function Book() {
                         {book.form.type}
                       </label>
                       <div className="relative">
-                        <select className="w-full bg-black/20 border-b border-white/20 py-4 px-4 focus:border-yellow-600 outline-none transition-colors appearance-none cursor-pointer text-white rounded-t-lg backdrop-blur-sm">
+                        <select className="w-full bg-black/20 border-b border-black/20 py-4 px-4 focus:border-gold-600 outline-none transition-colors appearance-none cursor-pointer text-[#1a1a1a] rounded-t-lg backdrop-blur-sm">
                           {book.eventTypes.map((type) => (
                             <option
                               key={type.value}
                               value={type.value}
-                              className="bg-gray-900 text-white"
+                              className="bg-gray-900 text-[#1a1a1a]"
                             >
                               {type.label}
                             </option>
@@ -119,7 +119,7 @@ export default function Book() {
                     </label>
                     <textarea
                       placeholder="Describe the mood, location, and your story..."
-                      className="w-full bg-transparent border-b border-white/20 py-4 h-32 focus:border-yellow-600 outline-none transition-colors resize-none text-white placeholder:text-gray-700"
+                      className="w-full bg-transparent border-b border-black/20 py-4 h-32 focus:border-gold-600 outline-none transition-colors resize-none text-[#1a1a1a] placeholder:text-gray-700"
                     />
                   </div>
 
@@ -127,18 +127,18 @@ export default function Book() {
                     <input
                       type="checkbox"
                       required
-                      className="mt-1 w-4 h-4 rounded border-white/20 accent-yellow-600"
+                      className="mt-1 w-4 h-4 rounded border-black/20 accent-gold-600"
                     />
                     <p className="leading-relaxed">
                       I agree to the processing of my details as per the{" "}
-                      <a href="/privacy-policy" className="text-yellow-600 underline">Privacy Policy</a> and{" "}
-                      <a href="/terms-of-service" className="text-yellow-600 underline">Terms of Service</a>.
+                      <a href="/privacy-policy" className="text-gold-600 underline">Privacy Policy</a> and{" "}
+                      <a href="/terms-of-service" className="text-gold-600 underline">Terms of Service</a>.
                     </p>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-5 rounded-full bg-yellow-600 text-white uppercase tracking-[0.2em] font-bold text-sm glow-button transition-all hover:bg-yellow-500"
+                    className="w-full py-5 rounded-full bg-gold-600 text-[#1a1a1a] uppercase tracking-[0.2em] font-bold text-sm glow-button transition-all hover:bg-gold-500"
                   >
                     {book.form.submit}
                   </button>
@@ -150,7 +150,7 @@ export default function Book() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-12"
                 >
-                  <div className="w-20 h-20 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                  <div className="w-20 h-20 bg-gold-600 rounded-full flex items-center justify-center mx-auto mb-8">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="32"
@@ -165,7 +165,7 @@ export default function Book() {
                       <path d="M20 6 9 17l-5-5" />
                     </svg>
                   </div>
-                  <h2 className="text-4xl font-serif mb-4 text-white">
+                  <h2 className="text-4xl font-serif mb-4 text-[#1a1a1a]">
                     {book.form.successTitle}
                   </h2>
                   <p className="premium-para max-w-sm mx-auto !text-zinc-500">
@@ -173,7 +173,7 @@ export default function Book() {
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="mt-8 text-sm uppercase tracking-widest underline underline-offset-8 hover:text-yellow-600 transition-colors"
+                    className="mt-8 text-sm uppercase tracking-widest underline underline-offset-8 hover:text-gold-600 transition-colors"
                   >
                     Send another request
                   </button>

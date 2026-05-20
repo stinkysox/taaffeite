@@ -12,9 +12,9 @@ const SocialIcon: React.FC<{
     aria-label={label}
     target="_blank"
     rel="noopener noreferrer"
-    className="w-12 h-12 flex items-center justify-center rounded-full glass border border-black/5 dark:border-white/10 hover:border-yellow-600 dark:hover:border-yellow-500 transition-all duration-500 hover:scale-110 group shadow-sm hover:shadow-yellow-600/20"
+    className="w-12 h-12 flex items-center justify-center rounded-full glass border border-black/5 dark:border-black/10 hover:border-gold-600 dark:hover:border-gold-500 transition-all duration-500 hover:scale-110 group shadow-sm hover:shadow-gold-600/20"
   >
-    <span className="group-hover:text-yellow-600 dark:group-hover:text-yellow-500 transition-colors duration-500 text-gray-400 dark:text-zinc-500">
+    <span className="group-hover:text-gold-600 dark:group-hover:text-gold-500 transition-colors duration-500 text-gray-400 dark:text-zinc-500">
       {children}
     </span>
   </a>
@@ -22,7 +22,7 @@ const SocialIcon: React.FC<{
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="py-32 px-6 border-t border-black/5 dark:border-white/5 bg-white dark:bg-[#050505] text-gray-900 dark:text-white transition-colors duration-500">
+    <footer className="py-32 px-6 border-t border-black/5 dark:border-black/5 bg-white  text-gray-900 dark:text-[#1a1a1a] transition-colors duration-500">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-16 mb-24">
           {/* Brand Identity Column */}
@@ -111,7 +111,7 @@ export const Footer: React.FC = () => {
 
           {/* Directory Column */}
           <div className="space-y-8">
-            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-yellow-600 dark:text-yellow-500">
+            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-gold-600 dark:text-gold-500">
               The Directory
             </h3>
             <nav className="flex flex-col gap-4 text-xs uppercase tracking-[0.5em] font-medium text-gray-400 dark:text-zinc-500">
@@ -119,7 +119,7 @@ export const Footer: React.FC = () => {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className="hover:text-yellow-600 dark:hover:text-yellow-500 transition-all duration-300 w-fit hover:translate-x-2"
+                  className="hover:text-gold-600 dark:hover:text-gold-500 transition-all duration-300 w-fit hover:translate-x-2"
                 >
                   {link.name}
                 </Link>
@@ -129,14 +129,14 @@ export const Footer: React.FC = () => {
 
           {/* Location Column */}
           <div className="space-y-8">
-            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-yellow-600 dark:text-yellow-500">
+            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-gold-600 dark:text-gold-500">
               Connect
             </h3>
             <div className="space-y-4 text-sm font-serif italic text-gray-500 dark:text-zinc-400">
-              <p className="hover:text-yellow-600 transition-colors duration-300 cursor-pointer">
+              <p className="hover:text-gold-600 transition-colors duration-300 cursor-pointer">
                 {siteContent.footer.contact.email}
               </p>
-              <p className="hover:text-yellow-600 transition-colors duration-300 cursor-pointer">
+              <p className="hover:text-gold-600 transition-colors duration-300 cursor-pointer">
                 {siteContent.footer.contact.phone}
               </p>
               <p>{siteContent.footer.contact.address}</p>
@@ -145,26 +145,26 @@ export const Footer: React.FC = () => {
 
           {/* Availability Column */}
           <div className="space-y-8 md:text-right">
-            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-yellow-600 dark:text-yellow-500">
+            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-gold-600 dark:text-gold-500">
               Archive Status
             </h3>
             <p className="text-base font-serif italic text-gray-500 dark:text-zinc-400 leading-relaxed">
               {siteContent.footer.availability.text}
             </p>
-            <div className="inline-block px-4 py-2 rounded-full border border-yellow-600/20 text-[9px] uppercase tracking-widest text-yellow-600 font-bold">
+            <div className="inline-block px-4 py-2 rounded-full border border-gold-600/20 text-[9px] uppercase tracking-widest text-gold-600 font-bold">
               {siteContent.footer.availability.status}
             </div>
           </div>
         </div>
 
         {/* Bottom Metadata Bar */}
-        <div className="pt-12 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="pt-12 border-t border-black/5 dark:border-black/5 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-[9px] text-gray-400 dark:text-zinc-600 uppercase tracking-[0.3em] font-light text-center md:text-left">
             &copy; {new Date().getFullYear()} {siteContent.footer.copyright}
           </div>
           <div className="flex gap-8 text-[9px] text-gray-400 dark:text-zinc-600 uppercase tracking-[0.3em] font-light">
-            <Link href="/privacy-policy" className="hover:text-yellow-600 transition-colors">Privacy Policy</Link>
-            <Link href="/terms-of-service" className="hover:text-yellow-600 transition-colors">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:text-gold-600 transition-colors">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:text-gold-600 transition-colors">Terms of Service</Link>
           </div>
           <div className="text-[9px] text-gray-400 dark:text-zinc-600 uppercase tracking-[0.3em] font-light">
             {siteContent.footer.legacies}

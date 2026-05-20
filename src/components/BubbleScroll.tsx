@@ -68,7 +68,7 @@ const Bubble: React.FC<{ config: BubbleConfig; progress: MotionValue<number>; in
           x: springX,
           y: springY,
         }}
-        className="rounded-full overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.5)] pointer-events-none will-change-transform"
+        className="rounded-full overflow-hidden border border-black/10 shadow-[0_0_80px_rgba(0,0,0,0.5)] pointer-events-none will-change-transform"
       >
         <img
           src={config.url}
@@ -144,7 +144,7 @@ const ScrollIndicator: React.FC<{ progress: MotionValue<number> }> = ({ progress
               cy="40"
               r="36"
               fill="none"
-              stroke="#ca8a04" // yellow-600
+              stroke="#ca8a04" // gold-600
               strokeWidth="1.5"
               strokeDasharray="226"
               style={{
@@ -156,20 +156,20 @@ const ScrollIndicator: React.FC<{ progress: MotionValue<number> }> = ({ progress
 
           {/* Pulsing Core */}
           <div className="absolute inset-0 flex items-center justify-center">
-             <div className="w-1.5 h-1.5 bg-yellow-600 rounded-full shadow-[0_0_12px_rgba(202,138,4,0.6)] animate-pulse" />
+             <div className="w-1.5 h-1.5 bg-gold-600 rounded-full shadow-[0_0_12px_rgba(202,138,4,0.6)] animate-pulse" />
           </div>
 
           {/* Magnetic text label */}
           <motion.div 
             style={{ rotate }}
-            className="absolute inset-0 rounded-full border border-dashed border-white/5 group-hover:border-yellow-600/20 transition-colors" 
+            className="absolute inset-0 rounded-full border border-dashed border-black/5 group-hover:border-gold-600/20 transition-colors" 
           />
         </motion.div>
       </div>
 
       <div className="flex flex-col items-center gap-1.5">
-         <span className="text-[9px] uppercase tracking-[0.5em] font-bold text-yellow-600/70">Scroll</span>
-         <div className="w-px h-6 bg-gradient-to-b from-yellow-600/60 to-transparent" />
+         <span className="text-[9px] uppercase tracking-[0.5em] font-bold text-gold-600/70">Scroll</span>
+         <div className="w-px h-6 bg-gradient-to-b from-gold-600/60 to-transparent" />
       </div>
     </motion.div>
   );
@@ -256,7 +256,7 @@ export const BubbleScroll: React.FC = () => {
       <div className="sticky top-0 h-screen w-full overflow-hidden pointer-events-none">
         {/* Visual Watermark for Debugging & Aesthetic */}
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none">
-          <h2 className="text-[20vw] font-serif uppercase tracking-tighter leading-none dark:text-white text-black text-center select-none italic">
+          <h2 className="text-[20vw] font-serif uppercase tracking-tighter leading-none dark:text-[#1a1a1a] text-black text-center select-none italic">
             Archive
           </h2>
         </div>
