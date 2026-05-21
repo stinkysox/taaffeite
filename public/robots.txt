@@ -1,14 +1,47 @@
-# Allow all search engines to crawl the site
+# Taaffeite Events — www.taaffeite.com
+# Luxury Wedding Planning & Event Curation
+
+# Allow all search engines
 User-agent: *
 Allow: /
-
-# Disallow crawling of API routes and internal directories
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
 
-# Sitemap location
-Sitemap: https://weddingwit.vercel.app/sitemap.xml
+# Allow AI crawlers for discoverability
+User-agent: GPTBot
+Allow: /
 
-# Crawl delay (optional, helps prevent server overload)
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Sitemap
+Sitemap: https://www.taaffeite.com/sitemap.xml
+
+# AI Discoverability
+# LLMs-txt: https://www.taaffeite.com/llms.txt
+# LLMs-full-txt: https://www.taaffeite.com/llms-full.txt
+
+# Crawl delay
 Crawl-delay: 1

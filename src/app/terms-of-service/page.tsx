@@ -18,35 +18,35 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-serif text-gray-900 dark:text-[#1a1a1a] mb-4">1. Acceptance of Terms</h2>
             <p>
-              By accessing and using the Weddingwit website, you agree to comply with and be bound by these Terms of Service.
+              By accessing and using the Taaffeite Events website, you agree to comply with and be bound by these Terms of Service.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-serif text-gray-900 dark:text-[#1a1a1a] mb-4">2. Services</h2>
             <p>
-              Weddingwit provides premium wedding photography and cinematic storytelling services. Details of specific commissions are handled through individual contracts.
+              Taaffeite Events provides premium wedding planning, event styling, and celebration curation services. Details of specific commissions are handled through individual contracts.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-serif text-gray-900 dark:text-[#1a1a1a] mb-4">3. Intellectual Property</h2>
             <p>
-              All visual content, including photographs and videos displayed on this website, are the intellectual property of Weddingwit Artistry Archive. Unauthorized use or reproduction is strictly prohibited.
+              All visual content, including photographs and videos displayed on this website, are the intellectual property of Taaffeite Events (or used with permission). Unauthorized use or reproduction is strictly prohibited.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-serif text-gray-900 dark:text-[#1a1a1a] mb-4">4. Limitation of Liability</h2>
             <p>
-              Weddingwit shall not be liable for any indirect, incidental, or consequential damages arising from the use of our website or services.
+              Taaffeite Events shall not be liable for any indirect, incidental, or consequential damages arising from the use of our website or services.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-serif text-gray-900 dark:text-[#1a1a1a] mb-4">5. Governing Law</h2>
             <p>
-              These terms are governed by the laws of India and the jurisdiction of Hyderabad, Telangana.
+              These terms are governed by the laws of India and the jurisdiction of Bangalore, Karnataka.
             </p>
           </section>
         </div>

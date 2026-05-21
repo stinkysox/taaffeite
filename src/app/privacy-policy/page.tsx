@@ -18,14 +18,14 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-serif text-gray-900 dark:text-[#1a1a1a] mb-4">1. Introduction</h2>
             <p>
-              At Weddingwit, we value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website and use our services.
+              At Taaffeite Events, we value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website and use our services.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-serif text-gray-900 dark:text-[#1a1a1a] mb-4">2. Information We Collect</h2>
             <p>
-              We may collect personal information such as your name, email address, phone number, and event details when you fill out our contact or booking forms. This information is used solely to provide our photography and cinematic services.
+              We may collect personal information such as your name, email address, phone number, and event details when you fill out our contact or booking forms. This information is used solely to provide our event planning and curation services.
             </p>
           </section>
 
@@ -54,9 +54,9 @@ export default function PrivacyPolicy() {
             <p>
               If you have any questions about this Privacy Policy, please contact us at:
               <br />
-              <strong>Email:</strong> archives@weddingwit.com
+              <strong>Email:</strong> hello@taaffeiteevents.com
               <br />
-              <strong>Location:</strong> Jubilee Hills, Hyderabad
+              <strong>Location:</strong> Bangalore, India
             </p>
           </section>
         </div>

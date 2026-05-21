@@ -1,8 +1,19 @@
 export const siteContent = {
   brand: {
-    name: "Taaffeite",
+    name: "Taaffeite Events",
     logoText: "TAAFFEITE",
     tagline: "Because rare stories deserve rare celebrations.",
+  },
+
+  socials: {
+    instagram:
+      "https://www.instagram.com/taaffeiteevents/?utm_source=chatgpt.com",
+    wedMeGood:
+      "https://www.wedmegood.com/profile/Taaffeite-Events-25042588?srsltid=AfmBOop_bgaeRe3LCx6eg9jacDSxhOKk-9glpzOU3wzwjiCIgl-829hI",
+    whatsapp: "https://wa.me/919148990266",
+    linkedin: "https://www.linkedin.com/company/taaffeiteevents/",
+    pinterest: "https://ar.pinterest.com/thetaaffeiteevents/_created/",
+    youtube: "https://www.youtube.com/@Taaffeiteevents",
   },
 
   navbar: {
@@ -11,6 +22,7 @@ export const siteContent = {
       { name: "About", path: "/about" },
       { name: "Services", path: "/services" },
       { name: "Gallery", path: "/gallery" },
+      { name: "Testimonials", path: "/testimonials" },
       { name: "Contact", path: "/contact" },
     ],
     cta: {
@@ -153,14 +165,26 @@ export const siteContent = {
     archive: {
       title: "The Archive",
       items: [
-        { step: "01", title: "Consultation", desc: "Understanding your vision and values." },
-        { step: "02", title: "Design", desc: "Crafting the aesthetics and flow." },
-        { step: "03", title: "Execution", desc: "Bringing the celebration to life." },
+        {
+          step: "01",
+          title: "Consultation",
+          desc: "Understanding your vision and values.",
+        },
+        {
+          step: "02",
+          title: "Design",
+          desc: "Crafting the aesthetics and flow.",
+        },
+        {
+          step: "03",
+          title: "Execution",
+          desc: "Bringing the celebration to life.",
+        },
       ],
       images: [
         "https://i.pinimg.com/736x/d8/d5/43/d8d54316260cb253a6eb6401deec675c.jpg",
-        "https://i.pinimg.com/736x/2b/97/ea/2b97ea83cdaeb04c71ef69c1ce81bb9f.jpg"
-      ]
+        "https://i.pinimg.com/736x/2b/97/ea/2b97ea83cdaeb04c71ef69c1ce81bb9f.jpg",
+      ],
     },
   },
 
@@ -326,15 +350,15 @@ export const siteContent = {
       studio: {
         title: "Studio",
         details: [
-          "Hyderabad, India",
+          "Bangalore, India",
           "Available for destination weddings & private celebrations",
         ],
       },
 
       communication: {
         title: "Contact",
-        email: "hello@taaffeite.com",
-        phone: "+91 90000 00000",
+        email: "hello@taaffeiteevents.com",
+        phone: "+91 91489 90266",
       },
 
       social: {
@@ -342,15 +366,31 @@ export const siteContent = {
         links: [
           {
             name: "Instagram",
-            url: "https://instagram.com",
+            url:
+              "https://www.instagram.com/taaffeiteevents/?utm_source=chatgpt.com",
           },
           {
             name: "Pinterest",
-            url: "https://pinterest.com",
+            url:
+              "https://ar.pinterest.com/thetaaffeiteevents/_created/",
           },
           {
             name: "WhatsApp",
-            url: "https://wa.me/919000000000",
+            url: "https://wa.me/919148990266",
+          },
+          {
+            name: "LinkedIn",
+            url:
+              "https://www.linkedin.com/company/taaffeiteevents/",
+          },
+          {
+            name: "YouTube",
+            url: "https://www.youtube.com/@Taaffeiteevents",
+          },
+          {
+            name: "WedMeGood",
+            url:
+              "https://www.wedmegood.com/profile/Taaffeite-Events-25042588?srsltid=AfmBOop_bgaeRe3LCx6eg9jacDSxhOKk-9glpzOU3wzwjiCIgl-829hI",
           },
         ],
       },
@@ -405,23 +445,37 @@ export const siteContent = {
     socials: [
       {
         name: "Instagram",
-        url: "https://instagram.com",
+        url:
+          "https://www.instagram.com/taaffeiteevents/?utm_source=chatgpt.com",
         icon: "instagram",
       },
       {
         name: "YouTube",
-        url: "https://youtube.com",
+        url: "https://www.youtube.com/@Taaffeiteevents",
         icon: "youtube",
       },
       {
         name: "WhatsApp",
-        url: "https://wa.me/919000000000",
+        url: "https://wa.me/919148990266",
         icon: "whatsapp",
       },
       {
         name: "Pinterest",
-        url: "https://pinterest.com",
+        url:
+          "https://ar.pinterest.com/thetaaffeiteevents/_created/",
         icon: "pinterest",
+      },
+      {
+        name: "LinkedIn",
+        url:
+          "https://www.linkedin.com/company/taaffeiteevents/",
+        icon: "linkedin",
+      },
+      {
+        name: "WedMeGood",
+        url:
+          "https://www.wedmegood.com/profile/Taaffeite-Events-25042588?srsltid=AfmBOop_bgaeRe3LCx6eg9jacDSxhOKk-9glpzOU3wzwjiCIgl-829hI",
+        icon: "sparkles",
       },
     ],
 
@@ -430,14 +484,15 @@ export const siteContent = {
       { name: "About", path: "/about" },
       { name: "Services", path: "/services" },
       { name: "Gallery", path: "/gallery" },
+      { name: "Testimonials", path: "/testimonials" },
       { name: "Contact", path: "/contact" },
     ],
 
     contact: {
-      email: "hello@taaffeite.com",
-      phone: "+91 90000 00000",
-      address: "Hyderabad, India",
-      phoneRaw: "+919000000000",
+      email: "hello@taaffeiteevents.com",
+      phone: "+91 91489 90266",
+      address: "Bangalore, India",
+      phoneRaw: "+919148990266",
     },
 
     availability: {
@@ -447,7 +502,7 @@ export const siteContent = {
     },
 
     copyright:
-      "Taaffeite Celebrations. All Rights Reserved.",
+      "Taaffeite Events. All Rights Reserved.",
 
     legacies:
       "Thoughtfully Curated Celebrations Across India & Beyond.",

@@ -4,43 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { SectionWrapper } from "../../components/SectionWrapper";
 
-interface Testimonial {
-  id: string;
-  name: string;
-  event: string;
-  quote: string;
-}
-
-const REVIEWS: Testimonial[] = [
-  {
-    id: "1",
-    name: "Ananya & Rohan",
-    event: "The Palace Rites",
-    quote:
-      "They didn’t just document the day; they captured the soul of our silence. The way they filmed our Varmala sequence felt like a frame from a classic epic.",
-  },
-  {
-    id: "2",
-    name: "Diya & Arjun",
-    event: "The Heritage Reception",
-    quote:
-      "A masterclass in editorial cinematography. They managed to find quiet, intimate moments even amidst the beautiful chaos of our grand reception.",
-  },
-  {
-    id: "3",
-    name: "Meera & Sameer",
-    event: "The Royal Courtyard",
-    quote:
-      "The attention to detail—from the texture of the heirloom silk to the silent exchange of glances during the Pheras—was absolutely breathtaking.",
-  },
-  {
-    id: "4",
-    name: "Sara & Ishaan",
-    event: "The Estate Celebration",
-    quote:
-      "Seamless, professional, and artistically superior. Weddingwit has a way of seeing light that feels almost supernatural. Our legacy is in safe hands.",
-  },
-];
+import { siteContent } from "../../data/siteContent";
 
 export default function Testimonials() {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -69,18 +33,19 @@ export default function Testimonials() {
       </SectionWrapper>
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
-        {REVIEWS.map((review, idx) => {
-          const isActive = activeId === review.id;
+        {siteContent.testimonials.items.map((review, idx) => {
+          const id = idx.toString();
+          const isActive = activeId === id;
 
           return (
             <SectionWrapper
-              key={review.id}
+              key={id}
               direction={idx % 2 === 0 ? "left" : "right"}
               delay={idx * 0.1}
             >
               <motion.div
-                onClick={() => handleInteraction(review.id, true)}
-                onMouseEnter={() => handleInteraction(review.id, false)}
+                onClick={() => handleInteraction(id, true)}
+                onMouseEnter={() => handleInteraction(id, false)}
                 onMouseLeave={() => setActiveId(null)}
                 animate={{
                   borderColor: isActive
@@ -102,7 +67,7 @@ export default function Testimonials() {
                     animate={{ color: isActive ? "#ca8a04" : "#ca8a04" }}
                     className="text-[10px] uppercase tracking-[0.3em] font-bold"
                   >
-                    {review.event}
+                    Bespoke Celebration
                   </motion.p>
                 </div>
 
