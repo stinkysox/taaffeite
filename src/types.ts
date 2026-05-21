@@ -3,13 +3,10 @@ export type Theme = "light" | "dark";
 
 // Gallery Categories
 export type GalleryCategory =
-  | "Wedding"
-  | "Pre-Wedding"
-  | "Engagement"
-  | "Haldi"
-  | "Sangeeth"
-  | "Baby Shoot"
-  | "Maternity"
+  | "Weddings"
+  | "Haldi/Mehandi"
+  | "Proposal"
+  | "Reception"
   | "Other";
 
 // Gallery Item

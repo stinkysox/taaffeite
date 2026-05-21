@@ -1,25 +1,16 @@
-import { WEDDING_GALLERY } from "./wedding";
-import { ENGAGEMENT_GALLERY } from "./engagement";
-import { FAMILY_GALLERY } from "./family";
-import { PRE_WEDDING_GALLERY } from "./preWedding";
-import { RITUALS_GALLERY } from "./rituals";
-import { BABY_GALLERY } from "./babyshoot";
-import { MATERNITY_GALLERY } from "./maternity";
+import { HALDI_MEHANDI_GALLERY } from "./haldiMehandi";
+import { PROPOSAL_GALLERY } from "./proposal";
+import { RECEPTION_GALLERY } from "./reception";
+import { WEDDINGS_GALLERY } from "./weddings";
 
 export const GALLERY_DATA = [
-  ...WEDDING_GALLERY,
-  ...PRE_WEDDING_GALLERY,
-  ...ENGAGEMENT_GALLERY,
-  ...RITUALS_GALLERY,
-  ...BABY_GALLERY,
-  ...FAMILY_GALLERY,
-  ...MATERNITY_GALLERY,
+  ...HALDI_MEHANDI_GALLERY,
+  ...PROPOSAL_GALLERY,
+  ...RECEPTION_GALLERY,
+  ...WEDDINGS_GALLERY,
 ];
 
-export * from "./wedding";
-export * from "./engagement";
-export * from "./family";
-export * from "./preWedding";
-export * from "./rituals";
-export * from "./babyshoot";
-export * from "./maternity";
+export * from "./haldiMehandi";
+export * from "./proposal";
+export * from "./reception";
+export * from "./weddings";

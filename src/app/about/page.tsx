@@ -213,27 +213,27 @@ export default function About() {
       </section>
 
       {/* THE ARCHIVE */}
-      <section className="bg-[#111] text-white py-32 px-6 md:px-16 relative z-10 overflow-hidden mb-56 rounded-[3rem] mx-4 md:mx-12 max-w-[1440px] xl:mx-auto shadow-2xl shadow-black/20">
-        {/* Glow behind */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-gold-600/5 blur-[120px] pointer-events-none" />
+      <section className="bg-[#f0ece4] text-[#111] py-32 px-6 md:px-16 relative z-10 overflow-hidden mb-56 rounded-[3rem] mx-4 md:mx-12 max-w-[1440px] xl:mx-auto shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-[#e0d9cc]">
+        {/* Warm glow behind */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#d4af37]/8 blur-[120px] pointer-events-none" />
 
         <div className="grid lg:grid-cols-12 gap-20 items-center relative z-10">
           {/* TEXT SIDE */}
           <div className="lg:col-span-6 space-y-16">
-            <h2 className="text-5xl md:text-7xl font-serif italic text-white tracking-tight">
+            <h2 className="text-5xl md:text-7xl font-serif italic text-[#111] tracking-tight">
               {about.archive.title}
             </h2>
             <div className="space-y-12">
               {about.archive.items.map((item, i) => (
                 <div key={i} className="flex gap-8 items-start group">
-                  <span className="text-xl font-serif italic text-gold-600 mt-1">
+                  <span className="text-xl font-serif italic text-[#c6a769] mt-1">
                     {item.step}
                   </span>
                   <div>
-                    <h3 className="text-2xl font-serif mb-3 text-white group-hover:text-gold-400 transition-colors">
+                    <h3 className="text-2xl font-serif mb-3 text-[#111] group-hover:text-[#c6a769] transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-zinc-400 font-light leading-relaxed max-w-md">
+                    <p className="text-zinc-500 font-light leading-relaxed max-w-md">
                       {item.desc}
                     </p>
                   </div>
@@ -245,7 +245,7 @@ export default function About() {
           {/* IMAGES SIDE */}
           <div className="lg:col-span-6 relative h-[600px] w-full hidden md:block">
             <motion.div
-              className="absolute top-0 right-10 w-3/5 h-4/5 rounded-[2.5rem] overflow-hidden border border-white/10 z-10 shadow-2xl"
+              className="absolute top-0 right-10 w-3/5 h-4/5 rounded-[2.5rem] overflow-hidden border border-[#e0d9cc] z-10 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
@@ -258,7 +258,7 @@ export default function About() {
               />
             </motion.div>
             <motion.div
-              className="absolute bottom-0 left-0 w-3/5 h-4/5 rounded-[2.5rem] overflow-hidden border border-white/10 z-20 shadow-2xl"
+              className="absolute bottom-0 left-0 w-3/5 h-4/5 rounded-[2.5rem] overflow-hidden border border-[#e0d9cc] z-20 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
               initial={{ y: 100, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
@@ -271,19 +271,19 @@ export default function About() {
               />
             </motion.div>
 
-            {/* Vinyl record abstract decoration */}
+            {/* Decorative gold ring accent */}
             <motion.div 
                initial={{ rotate: 0 }}
                animate={{ rotate: 360 }}
                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-               className="absolute -bottom-8 -right-8 w-40 h-40 opacity-40 pointer-events-none z-30"
+               className="absolute -bottom-8 -right-8 w-40 h-40 opacity-30 pointer-events-none z-30"
             >
-              <div className="w-full h-full rounded-full border border-zinc-700/50 bg-black flex items-center justify-center relative shadow-xl">
-                <div className="w-[90%] h-[90%] rounded-full border border-zinc-800/80"></div>
-                <div className="w-[80%] h-[80%] rounded-full border border-zinc-800/60 absolute"></div>
-                <div className="w-[70%] h-[70%] rounded-full border border-zinc-800/40 absolute"></div>
-                <div className="w-12 h-12 rounded-full bg-gold-600/90 shadow-[0_0_15px_rgba(212,175,55,0.5)] z-10"></div>
-                <div className="w-3 h-3 rounded-full bg-black absolute z-20"></div>
+              <div className="w-full h-full rounded-full border border-[#c6a769]/30 bg-[#f0ece4] flex items-center justify-center relative shadow-lg">
+                <div className="w-[90%] h-[90%] rounded-full border border-[#c6a769]/20"></div>
+                <div className="w-[80%] h-[80%] rounded-full border border-[#c6a769]/15 absolute"></div>
+                <div className="w-[70%] h-[70%] rounded-full border border-[#c6a769]/10 absolute"></div>
+                <div className="w-12 h-12 rounded-full bg-[#c6a769]/60 shadow-[0_0_15px_rgba(198,167,105,0.3)] z-10"></div>
+                <div className="w-3 h-3 rounded-full bg-[#f0ece4] absolute z-20"></div>
               </div>
             </motion.div>
           </div>

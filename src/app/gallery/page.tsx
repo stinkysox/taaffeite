@@ -7,14 +7,10 @@ import { GALLERY_DATA } from "@/data/gallery";
 
 const CATEGORIES = [
   "All",
-  "Wedding",
-  "Pre-Wedding",
-  "Maternity",
-  "Baby Shoot",
-  "Engagement",
-  "Family",
-  "Rituals",
-  "Other Events",
+  "Weddings",
+  "Haldi/Mehandi",
+  "Proposal",
+  "Reception",
 ];
 
 export default function Gallery() {
