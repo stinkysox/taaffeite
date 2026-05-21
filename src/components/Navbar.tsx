@@ -1,156 +1,298 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Menu,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+
 import { siteContent } from "../data/siteContent";
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
+  const [hideNav, setHideNav] = useState(false);
   const pathname = usePathname();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Watch for BubbleScroll signalling to hide the nav
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const val = document.documentElement.getAttribute("data-hide-nav");
+      setHideNav(val === "true");
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-hide-nav"] });
+    return () => observer.disconnect();
+  }, []);
+
+  // Close on route change
+  useEffect(() => setIsOpen(false), [pathname]);
 
   return (
     <>
+      <style>{`
+        .nav-glass {
+          background: rgba(255, 255, 255, 0.55);
+          border: 1px solid rgba(255, 255, 255, 0.45);
+          backdrop-filter: saturate(180%) blur(28px);
+          -webkit-backdrop-filter: saturate(180%) blur(28px);
+          transition: background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+        .nav-glass.scrolled {
+          background: rgba(255, 255, 255, 0.72);
+          border-color: rgba(255, 255, 255, 0.6);
+          box-shadow:
+            0 1px 0 rgba(255,255,255,0.8) inset,
+            0 8px 32px rgba(0, 0, 0, 0.06),
+            0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .nav-link {
+          position: relative;
+          font-size: 11px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          font-weight: 500;
+          color: rgba(0,0,0,0.45);
+          padding: 8px 18px;
+          border-radius: 100px;
+          transition: color 0.25s ease;
+        }
+        .nav-link:hover { color: rgba(0,0,0,0.82); }
+        .nav-link.active { color: rgba(0,0,0,0.88); }
+        .nav-pill {
+          position: absolute;
+          inset: 0;
+          border-radius: 100px;
+          background: rgba(0, 0, 0, 0.055);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          backdrop-filter: blur(2px);
+          -webkit-backdrop-filter: blur(2px);
+        }
+        .gold-btn {
+          position: relative;
+          overflow: hidden;
+          border-radius: 100px;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(212,175,55,0.9) 0%, rgba(232,207,132,0.95) 50%, rgba(198,167,105,0.9) 100%);
+          box-shadow:
+            0 1px 0 rgba(255,255,255,0.5) inset,
+            0 4px 16px rgba(212,175,55,0.3);
+          transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .gold-btn:hover {
+          box-shadow:
+            0 1px 0 rgba(255,255,255,0.6) inset,
+            0 6px 24px rgba(212,175,55,0.45);
+          transform: translateY(-1px);
+        }
+        .gold-btn:active { transform: translateY(0); }
+        .gold-btn-inner {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 9px 22px;
+          border-radius: 100px;
+          background: linear-gradient(135deg, #d4af37 0%, #e8cf84 50%, #c6a769 100%);
+        }
+        .gold-btn span {
+          font-size: 10px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: rgba(0,0,0,0.8);
+        }
+        .gold-icon {
+          width: 26px;
+          height: 26px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: rgba(0,0,0,0.12);
+          transition: transform 0.3s ease;
+        }
+        .gold-btn:hover .gold-icon {
+          transform: translate(2px, -2px);
+        }
+
+        /* Mobile menu glass */
+        .mobile-glass {
+          background: rgba(255, 255, 255, 0.78);
+          border: 1px solid rgba(255, 255, 255, 0.55);
+          backdrop-filter: saturate(200%) blur(40px);
+          -webkit-backdrop-filter: saturate(200%) blur(40px);
+          border-radius: 28px;
+          box-shadow:
+            0 1px 0 rgba(255,255,255,0.9) inset,
+            0 0 0 0.5px rgba(0,0,0,0.04),
+            0 24px 64px rgba(0,0,0,0.1),
+            0 8px 24px rgba(0,0,0,0.06);
+        }
+        .mobile-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 18px 0;
+          border-bottom: 1px solid rgba(0,0,0,0.06);
+          transition: opacity 0.2s ease;
+        }
+        .mobile-link:last-child { border-bottom: none; }
+        .mobile-link-text {
+          font-size: 22px;
+          font-weight: 400;
+          letter-spacing: -0.02em;
+          color: rgba(0,0,0,0.78);
+          font-family: 'Georgia', 'Times New Roman', serif;
+          font-style: italic;
+        }
+        .mobile-link.active .mobile-link-text {
+          color: rgba(0,0,0,0.92);
+        }
+        .mobile-link:active { opacity: 0.6; }
+
+        /* Overlay blur */
+        .overlay-blur {
+          backdrop-filter: blur(16px) brightness(0.9);
+          -webkit-backdrop-filter: blur(16px) brightness(0.9);
+          background: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Hamburger button */
+        .menu-btn {
+          width: 42px;
+          height: 42px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.04);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          cursor: pointer;
+          transition: background 0.2s ease, transform 0.15s ease;
+        }
+        .menu-btn:hover { background: rgba(0, 0, 0, 0.07); }
+        .menu-btn:active { transform: scale(0.94); }
+      `}</style>
+
+      {/* ─── Main Nav ─── */}
       <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 right-0 z-[100] px-4 md:px-8 pt-4"
+        initial={{ y: -72, opacity: 0 }}
+        animate={hideNav ? { y: -96, opacity: 0 } : { y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          padding: "14px 20px",
+          pointerEvents: hideNav ? "none" : "auto",
+        }}
       >
         <div
-          className={`mx-auto max-w-7xl transition-all duration-500 ${scrolled
-            ? "bg-white/70 border border-black/5 shadow-[0_8px_40px_rgba(0,0,0,0.08)] backdrop-blur-2xl"
-            : "bg-white/40 border border-white/20 backdrop-blur-xl"
-            } rounded-[2rem]`}
+          className={`nav-glass${scrolled ? " scrolled" : ""}`}
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            borderRadius: 100,
+            padding: "6px 6px 6px 20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          <div className="relative flex items-center justify-between px-5 md:px-8 py-4">
-            {/* Glow */}
-            <div className="absolute inset-0 rounded-[2rem] overflow-hidden pointer-events-none">
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[300px] h-[120px] bg-[#d4af37]/10 blur-3xl" />
-            </div>
+          {/* Logo */}
+          <Link href="/" style={{ flexShrink: 0 }}>
+            <Image
+              src="/tafflogo.png"
+              alt="Taaffeite Events"
+              width={90}
+              height={90}
+              priority
+              style={{ width: 80, height: "auto", display: "block", objectFit: "contain" }}
+            />
+          </Link>
 
-            {/* Logo */}
-            <Link
-              href="/"
-              className="relative z-10 flex flex-col leading-none group"
-            >
-              <span className="text-[1.35rem] md:text-[1.55rem] font-serif tracking-tight text-[#111]">
-                {siteContent.brand.name}
-                <span className="text-[#c6a769]">.</span>
-              </span>
+          {/* Desktop Links — centered absolutely */}
+          <div
+            style={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              alignItems: "center",
+              gap: 2,
+            }}
+            className="hidden lg:flex"
+          >
+            {siteContent.navbar.links.map((link) => {
+              const active = pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className={`nav-link${active ? " active" : ""}`}
+                >
+                  {active && (
+                    <motion.div
+                      layoutId="pill"
+                      className="nav-pill"
+                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  <span style={{ position: "relative", zIndex: 1 }}>{link.name}</span>
+                </Link>
+              );
+            })}
+          </div>
 
-              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-zinc-500 mt-1 group-hover:text-[#111] transition-colors">
-                Rare Celebrations
-              </span>
-            </Link>
-
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-              {siteContent.navbar.links.map((link) => {
-                const active = pathname === link.path;
-
-                return (
-                  <Link
-                    key={link.path}
-                    href={link.path}
-                    className="relative group"
-                  >
-                    <div
-                      className={`relative px-5 py-2.5 rounded-full overflow-hidden transition-all duration-300 ${active
-                        ? "text-[#111]"
-                        : "text-zinc-500 hover:text-[#111]"
-                        }`}
-                    >
-                      {/* Active pill */}
-                      {active && (
-                        <motion.div
-                          layoutId="navbar-pill"
-                          transition={{
-                            type: "spring",
-                            stiffness: 350,
-                            damping: 30,
-                          }}
-                          className="absolute inset-0 bg-black/[0.045] border border-black/5 rounded-full"
-                        />
-                      )}
-
-                      {/* Hover background */}
-                      <div className="absolute inset-0 rounded-full bg-black/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                      <span className="relative z-10 text-[11px] uppercase tracking-[0.25em] font-medium">
-                        {link.name}
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* CTA */}
-            <div className="hidden lg:flex items-center gap-3 relative z-10">
-              <Link
-                href={siteContent.navbar.cta.path}
-                className="group relative overflow-hidden rounded-full"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#e8cf84] to-[#c6a769]" />
-
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.45),transparent_60%)]" />
-
-                <div className="relative flex items-center gap-2 px-6 py-3">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-black font-semibold">
-                    {siteContent.navbar.cta.text}
-                  </span>
-
-                  <div className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">
-                    <ArrowUpRight size={14} className="text-black" />
+          {/* Desktop CTA + Mobile Toggle */}
+          <div style={{ alignItems: "center", gap: 10, flexShrink: 0 }} className="flex">
+            {/* CTA — desktop */}
+            <div className="hidden lg:block">
+              <Link href={siteContent.navbar.cta.path} className="gold-btn">
+                <div className="gold-btn-inner">
+                  <span>{siteContent.navbar.cta.text}</span>
+                  <div className="gold-icon">
+                    <ArrowUpRight size={13} color="rgba(0,0,0,0.7)" />
                   </div>
                 </div>
               </Link>
             </div>
 
-            {/* Mobile Button */}
+            {/* Hamburger — mobile */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden relative z-20 w-12 h-12 rounded-full bg-black/[0.04] border border-black/5 flex items-center justify-center text-[#111]"
+              className="menu-btn flex lg:hidden"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 {isOpen ? (
                   <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
+                    key="x"
+                    initial={{ rotate: -45, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    exit={{ rotate: 45, opacity: 0 }}
+                    transition={{ duration: 0.18 }}
                   >
-                    <X size={20} />
+                    <X size={18} color="rgba(0,0,0,0.7)" />
                   </motion.div>
                 ) : (
                   <motion.div
                     key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
+                    initial={{ rotate: 45, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    exit={{ rotate: -45, opacity: 0 }}
+                    transition={{ duration: 0.18 }}
                   >
-                    <Menu size={20} />
+                    <Menu size={18} color="rgba(0,0,0,0.7)" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -159,101 +301,139 @@ export const Navbar: React.FC = () => {
         </div>
       </motion.nav>
 
-      {/* MOBILE MENU */}
+      {/* ─── Mobile Menu ─── */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Blur Overlay */}
+            {/* Backdrop */}
             <motion.div
+              key="overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/20 backdrop-blur-md z-[90]"
+              className="overlay-blur"
+              style={{
+                position: "fixed",
+                inset: 0,
+                zIndex: 90,
+              }}
             />
 
-            {/* Menu */}
+            {/* Panel */}
             <motion.div
-              initial={{ opacity: 0, y: -30, scale: 0.96 }}
+              key="panel"
+              ref={menuRef}
+              initial={{ opacity: 0, y: -20, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -30, scale: 0.96 }}
-              transition={{
-                duration: 0.45,
-                ease: [0.16, 1, 0.3, 1],
+              exit={{ opacity: 0, y: -20, scale: 0.97 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+              className="mobile-glass lg:hidden"
+              style={{
+                position: "fixed",
+                top: 90,
+                left: 16,
+                right: 16,
+                zIndex: 95,
+                padding: "28px 28px 24px",
               }}
-              className="fixed top-24 left-4 right-4 z-[95] lg:hidden"
             >
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/20 bg-white/75 backdrop-blur-3xl shadow-[0_20px_80px_rgba(0,0,0,0.12)]">
-                {/* Background Glow */}
-                <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[240px] h-[240px] bg-[#d4af37]/10 blur-3xl" />
+              {/* Subtle gold glow at top */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: -40,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 200,
+                  height: 120,
+                  background: "radial-gradient(ellipse, rgba(212,175,55,0.18) 0%, transparent 70%)",
+                  pointerEvents: "none",
+                }}
+              />
 
-                <div className="relative px-7 py-8 flex flex-col">
-                  <div className="mb-8">
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-zinc-400 mb-2">
-                      Navigation
-                    </p>
+              {/* Label */}
+              <p
+                style={{
+                  fontSize: 10,
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
+                  color: "rgba(0,0,0,0.3)",
+                  marginBottom: 20,
+                  fontWeight: 500,
+                }}
+              >
+                Menu
+              </p>
 
-                    <h2 className="text-3xl font-serif text-[#111] leading-tight">
-                      Crafted
-                      <br />
-                      Experiences.
-                    </h2>
-                  </div>
-
-                  <div className="flex flex-col">
-                    {siteContent.navbar.links.map((link, index) => {
-                      const active = pathname === link.path;
-
-                      return (
-                        <motion.div
-                          key={link.path}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            delay: index * 0.06,
+              {/* Links */}
+              <nav>
+                {siteContent.navbar.links.map((link, i) => {
+                  const active = pathname === link.path;
+                  return (
+                    <motion.div
+                      key={link.path}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.055, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <Link
+                        href={link.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`mobile-link${active ? " active" : ""}`}
+                      >
+                        <span className="mobile-link-text">{link.name}</span>
+                        <div
+                          style={{
+                            width: 34,
+                            height: 34,
+                            borderRadius: "50%",
+                            border: "1px solid rgba(0,0,0,0.08)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                            background: active ? "rgba(212,175,55,0.12)" : "transparent",
+                            transition: "background 0.2s ease",
                           }}
                         >
-                          <Link
-                            href={link.path}
-                            onClick={() => setIsOpen(false)}
-                            className={`group flex items-center justify-between py-5 border-b border-black/5 transition-all duration-300 ${active
-                              ? "text-[#111]"
-                              : "text-zinc-500 hover:text-[#111]"
-                              }`}
-                          >
-                            <span className="text-xl uppercase tracking-[0.18em] font-medium">
-                              {link.name}
-                            </span>
+                          <ArrowUpRight size={15} color={active ? "#c6a769" : "rgba(0,0,0,0.3)"} />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </nav>
 
-                            <ArrowUpRight
-                              size={18}
-                              className="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300"
-                            />
-                          </Link>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-
-                  <Link
-                    href={siteContent.navbar.cta.path}
-                    onClick={() => setIsOpen(false)}
-                    className="group mt-8 relative overflow-hidden rounded-full"
+              {/* CTA */}
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: siteContent.navbar.links.length * 0.055 + 0.05,
+                  duration: 0.35,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                style={{ marginTop: 24 }}
+              >
+                <Link
+                  href={siteContent.navbar.cta.path}
+                  onClick={() => setIsOpen(false)}
+                  className="gold-btn"
+                  style={{ display: "block" }}
+                >
+                  <div
+                    className="gold-btn-inner"
+                    style={{ justifyContent: "space-between", padding: "14px 20px" }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#e8cf84] to-[#c6a769]" />
-
-                    <div className="relative flex items-center justify-between px-6 py-4">
-                      <span className="text-[11px] uppercase tracking-[0.3em] text-black font-semibold">
-                        {siteContent.navbar.cta.text}
-                      </span>
-
-                      <div className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">
-                        <ArrowUpRight size={16} className="text-black" />
-                      </div>
+                    <span style={{ fontSize: 11 }}>{siteContent.navbar.cta.text}</span>
+                    <div className="gold-icon" style={{ width: 32, height: 32 }}>
+                      <ArrowUpRight size={15} color="rgba(0,0,0,0.7)" />
                     </div>
-                  </Link>
-                </div>
-              </div>
+                  </div>
+                </Link>
+              </motion.div>
             </motion.div>
           </>
         )}

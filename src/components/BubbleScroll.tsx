@@ -1,61 +1,130 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValue, MotionValue } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  MotionValue,
+} from "framer-motion";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface BubbleConfig {
   url: string;
-  size: number;
-  x: string;
-  y: string;
-  range: [number, number]; // [start, end] of global scroll
+  size: number;          // desktop diameter in px
+  x: string;            // left position
+  y: string;            // top position
+  range: [number, number];
   drift: { x: number; y: number };
+  layer: 1 | 2 | 3;    // parallax depth layer
+  caption: string;      // moment title shown at peak
 }
 
-const Bubble: React.FC<{ config: BubbleConfig; progress: MotionValue<number>; index: number }> = ({
-  config,
+// ─── Caption strip ────────────────────────────────────────────────────────────
+
+const Caption: React.FC<{ text: string; progress: MotionValue<number>; range: [number, number] }> = ({
+  text,
   progress,
-  index,
+  range,
 }) => {
-  const [mounted, setMounted] = React.useState(false);
+  const [s, e] = range;
+  const mid = (s + e) / 2;
+  const opacity = useTransform(
+    progress,
+    [s + 0.04, mid - 0.04, mid, mid + 0.04, e - 0.04],
+    [0, 0.9, 1, 0.9, 0]
+  );
+  const y = useTransform(progress, [s + 0.04, mid, e - 0.04], [6, 0, -6]);
+
+  return (
+    <motion.p
+      style={{ opacity, y }}
+      aria-hidden
+      className="absolute bottom-16 left-0 right-0 text-center pointer-events-none"
+    >
+      <span
+        style={{
+          fontFamily: "Georgia, 'Times New Roman', serif",
+          fontStyle: "italic",
+          fontSize: "clamp(11px, 1.2vw, 13px)",
+          letterSpacing: "0.38em",
+          textTransform: "uppercase",
+          color: "rgba(0,0,0,0.32)",
+          fontWeight: 400,
+        }}
+      >
+        {text}
+      </span>
+    </motion.p>
+  );
+};
+
+// ─── Single bubble ────────────────────────────────────────────────────────────
+
+const Bubble: React.FC<{
+  config: BubbleConfig;
+  progress: MotionValue<number>;
+  index: number;
+}> = ({ config, progress, index }) => {
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
-    setMounted(true);
-    setIsMobile(window.innerWidth < 768);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
-  const responsiveSize = (mounted && isMobile) ? config.size * 0.45 : config.size;
+  const size = isMobile ? config.size * 0.52 : config.size;
 
-  const start = config.range[0];
-  const end = config.range[1];
-  const mid = (start + end) / 2;
+  const [s, e] = config.range;
+  const mid = (s + e) / 2;
 
-  // Extremely generous opacity range to ensure we don't have blank screens
-  const opacity = useTransform(progress, [start, start + 0.15, end - 0.15, end], [0, 1, 1, 0]);
-  const scale = useTransform(progress, [start, mid, end], [0.6, 1.8, 0.6]);
-  
-  // Drift values
-  const driftX = useTransform(progress, [start, end], ["0%", ((mounted && isMobile) ? config.drift.x * 0.2 : config.drift.x) + "%"]);
-  const driftY = useTransform(progress, [start, end], ["0%", ((mounted && isMobile) ? config.drift.y * 0.4 : config.drift.y) + "%"]);
+  // Parallax speed per layer
+  const layerSpeed = { 1: 0.8, 2: 1.0, 3: 1.25 }[config.layer] ?? 1;
+  const driftMult = isMobile ? 0.28 : 1;
 
-  const springScale = useSpring(scale, { stiffness: 60, damping: 25 });
-  const springX = useSpring(driftX, { stiffness: 45, damping: 20 });
-  const springY = useSpring(driftY, { stiffness: 45, damping: 20 });
+  const opacity = useTransform(
+    progress,
+    [s, s + 0.12, e - 0.12, e],
+    [0, 1, 1, 0]
+  );
+  const scale = useTransform(
+    progress,
+    [s, s + 0.18, mid, e - 0.18, e],
+    [0.55, 0.92, 1, 0.92, 0.55]
+  );
+  const driftX = useTransform(
+    progress,
+    [s, e],
+    [0, config.drift.x * driftMult * layerSpeed]
+  );
+  const driftY = useTransform(
+    progress,
+    [s, e],
+    [0, config.drift.y * driftMult * layerSpeed]
+  );
 
-  const responsiveLeft = (mounted && isMobile)
-    ? `calc(${config.x} * 0.6 + 20%)`
+  const springCfg = { stiffness: 50 + config.layer * 10, damping: 22 };
+  const sScale = useSpring(scale, springCfg);
+  const sX = useSpring(driftX, springCfg);
+  const sY = useSpring(driftY, springCfg);
+
+  const left = isMobile
+    ? `calc(${config.x} * 0.55 + 22.5%)`
     : config.x;
 
   return (
     <div
       style={{
         position: "absolute",
-        left: responsiveLeft,
+        left,
         top: config.y,
-        width: responsiveSize,
-        height: responsiveSize,
-        transform: "translate(-50%, -50%)", // Static centering
+        width: size,
+        height: size,
+        transform: "translate(-50%, -50%)",
         zIndex: 10 + index,
       }}
     >
@@ -64,116 +133,190 @@ const Bubble: React.FC<{ config: BubbleConfig; progress: MotionValue<number>; in
           width: "100%",
           height: "100%",
           opacity,
-          scale: springScale,
-          x: springX,
-          y: springY,
+          scale: sScale,
+          x: sX,
+          y: sY,
+          willChange: "transform, opacity",
         }}
-        className="rounded-full overflow-hidden border border-black/10 shadow-[0_0_80px_rgba(0,0,0,0.5)] pointer-events-none will-change-transform"
       >
-        <img
-          src={config.url}
-          alt="Wedding moment"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/10 pointer-events-none" />
+        {/* Photo */}
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            borderRadius: "50%",
+            overflow: "hidden",
+            position: "relative",
+            // Clean shadow for white bg
+            boxShadow: `
+              0 0 0 1px rgba(0,0,0,0.06),
+              0 12px 48px rgba(0,0,0,0.10),
+              0 4px 16px rgba(0,0,0,0.06)
+            `,
+          }}
+        >
+          <img
+            src={config.url}
+            alt=""
+            aria-hidden
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+              filter: "brightness(1.02) contrast(1.03) saturate(0.88)",
+            }}
+          />
+
+          {/* Soft edge fade — blends into white bg */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "50%",
+              boxShadow: "inset 0 0 40px rgba(255,255,255,0.18)",
+              pointerEvents: "none",
+            }}
+          />
+
+          {/* Rim — thin dark ring so circle reads on white */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "50%",
+              border: "1px solid rgba(0,0,0,0.08)",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
       </motion.div>
     </div>
   );
 };
 
+// ─── Scroll indicator ─────────────────────────────────────────────────────────
+
 const ScrollIndicator: React.FC<{ progress: MotionValue<number> }> = ({ progress }) => {
   const [mounted, setMounted] = React.useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springConfig = { damping: 20, stiffness: 150 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
-
   React.useEffect(() => setMounted(true), []);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    x.set((clientX - centerX) * 0.4);
-    y.set((clientY - centerY) * 0.4);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  const opacity = useTransform(progress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
-  const rotate = useTransform(progress, [0, 1], [0, 360]);
+  const wrapperOpacity = useTransform(progress, [0, 0.04, 0.96, 1], [0, 1, 1, 0]);
+  // Dot travels down the 80px track
+  const dotY = useTransform(progress, [0, 1], [0, 72]);
+  const dotOpacity = useTransform(progress, [0.96, 1], [1, 0]);
 
   if (!mounted) return null;
 
   return (
     <motion.div
-      style={{ opacity }}
-      className="absolute bottom-12 right-12 md:right-24 z-50 flex flex-col items-center gap-4 pointer-events-auto"
+      style={{ opacity: wrapperOpacity }}
+      className="absolute bottom-12 right-10 md:right-16 z-50 flex flex-col items-center gap-3 pointer-events-none"
     >
-      <div
-        ref={containerRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="relative w-20 h-20 flex items-center justify-center cursor-pointer group"
+      <span
+        style={{
+          fontSize: 8,
+          letterSpacing: "0.5em",
+          textTransform: "uppercase",
+          fontWeight: 600,
+          color: "rgba(212,175,55,0.6)",
+          fontFamily: "system-ui, sans-serif",
+        }}
       >
+        Scroll
+      </span>
+
+      {/* Track */}
+      <div
+        style={{
+          position: "relative",
+          width: 1,
+          height: 80,
+          background: "rgba(0,0,0,0.1)",
+        }}
+      >
+        {/* Gliding gold dot */}
         <motion.div
-          style={{ x: springX, y: springY }}
-          className="relative w-full h-full flex items-center justify-center"
-        >
-          {/* Progress Ring */}
-          <svg className="w-full h-full -rotate-90">
-            <circle
-              cx="40"
-              cy="40"
-              r="36"
-              fill="none"
-              stroke="white"
-              strokeWidth="0.5"
-              className="opacity-10"
-            />
-            <motion.circle
-              cx="40"
-              cy="40"
-              r="36"
-              fill="none"
-              stroke="#ca8a04" // gold-600
-              strokeWidth="1.5"
-              strokeDasharray="226"
-              style={{
-                pathLength: progress,
-              }}
-              className="transition-all duration-300"
-            />
-          </svg>
-
-          {/* Pulsing Core */}
-          <div className="absolute inset-0 flex items-center justify-center">
-             <div className="w-1.5 h-1.5 bg-gold-600 rounded-full shadow-[0_0_12px_rgba(202,138,4,0.6)] animate-pulse" />
-          </div>
-
-          {/* Magnetic text label */}
-          <motion.div 
-            style={{ rotate }}
-            className="absolute inset-0 rounded-full border border-dashed border-black/5 group-hover:border-gold-600/20 transition-colors" 
-          />
-        </motion.div>
-      </div>
-
-      <div className="flex flex-col items-center gap-1.5">
-         <span className="text-[9px] uppercase tracking-[0.5em] font-bold text-gold-600/70">Scroll</span>
-         <div className="w-px h-6 bg-gradient-to-b from-gold-600/60 to-transparent" />
+          style={{
+            y: dotY,
+            opacity: dotOpacity,
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 3,
+            height: 3,
+            borderRadius: "50%",
+            background: "#d4af37",
+            boxShadow: "0 0 8px rgba(212,175,55,0.9), 0 0 3px rgba(212,175,55,0.6)",
+          }}
+        />
       </div>
     </motion.div>
   );
 };
+
+// ─── Counter ──────────────────────────────────────────────────────────────────
+
+const Counter: React.FC<{ progress: MotionValue<number>; total: number; bubbles: BubbleConfig[] }> = ({
+  progress,
+  total,
+  bubbles,
+}) => {
+  const [current, setCurrent] = React.useState(1);
+
+  React.useEffect(() => {
+    return progress.on("change", (v) => {
+      // Find which bubble is most "active"
+      let best = 0;
+      let bestScore = -1;
+      bubbles.forEach((b, i) => {
+        const mid = (b.range[0] + b.range[1]) / 2;
+        const dist = 1 - Math.abs(v - mid) * 4;
+        if (dist > bestScore) { bestScore = dist; best = i; }
+      });
+      setCurrent(best + 1);
+    });
+  }, [progress, bubbles]);
+
+  return (
+    <div
+      className="absolute top-10 right-10 md:right-16 z-50 pointer-events-none flex items-baseline gap-1"
+    >
+      <motion.span
+        key={current}
+        initial={{ opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -4 }}
+        transition={{ duration: 0.3 }}
+        style={{
+          fontSize: 13,
+          fontFamily: "Georgia, serif",
+          fontStyle: "italic",
+          color: "rgba(0,0,0,0.5)",
+          fontWeight: 400,
+          minWidth: 16,
+          display: "inline-block",
+          textAlign: "right",
+        }}
+      >
+        {String(current).padStart(2, "0")}
+      </motion.span>
+      <span
+        style={{
+          fontSize: 9,
+          color: "rgba(0,0,0,0.18)",
+          letterSpacing: "0.1em",
+          fontFamily: "system-ui, sans-serif",
+        }}
+      >
+        /{String(total).padStart(2, "0")}
+      </span>
+    </div>
+  );
+};
+
+// ─── Main export ──────────────────────────────────────────────────────────────
 
 export const BubbleScroll: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -182,94 +325,164 @@ export const BubbleScroll: React.FC = () => {
     offset: ["start start", "end end"],
   });
 
-  // Balanced, overlapping ranges to ensure no blank zones
+  // Hide navbar while this section is in view
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        document.documentElement.setAttribute(
+          "data-hide-nav",
+          entry.isIntersecting ? "true" : "false"
+        );
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      document.documentElement.removeAttribute("data-hide-nav");
+    };
+  }, []);
+
   const bubbles: BubbleConfig[] = [
     {
       url: "https://i.pinimg.com/736x/b5/23/b3/b523b3e8a7410b20dedbac7491a528af.jpg",
-      size: 500,
-      x: "15%",
-      y: "30%",
-      range: [0, 0.4],
-      drift: { x: 50, y: -80 },
+      size: 520,
+      x: "18%",
+      y: "32%",
+      range: [0, 0.38],
+      drift: { x: 40, y: -70 },
+      layer: 1,
+      caption: "The First Look",
     },
     {
       url: "https://i.pinimg.com/736x/ba/63/52/ba63529729f2cc61dbac103f6f7bb238.jpg",
-      size: 350,
-      x: "70%",
-      y: "25%",
-      range: [0.1, 0.5],
-      drift: { x: -40, y: -60 },
+      size: 340,
+      x: "72%",
+      y: "24%",
+      range: [0.08, 0.46],
+      drift: { x: -50, y: -55 },
+      layer: 3,
+      caption: "Golden Hour",
     },
     {
       url: "https://i.pinimg.com/736x/00/bd/a0/00bda06b701af0b5ee56538e55312a06.jpg",
-      size: 420,
-      x: "30%",
-      y: "60%",
-      range: [0.25, 0.65],
-      drift: { x: 60, y: -100 },
+      size: 440,
+      x: "34%",
+      y: "62%",
+      range: [0.22, 0.58],
+      drift: { x: 55, y: -90 },
+      layer: 2,
+      caption: "Quiet Ceremony",
     },
     {
       url: "https://i.pinimg.com/1200x/70/7c/74/707c741bd1aa9d0c154f81f2bc089bd8.jpg",
-      size: 280,
-      x: "80%",
-      y: "45%",
-      range: [0.35, 0.75],
-      drift: { x: -80, y: -70 },
+      size: 290,
+      x: "78%",
+      y: "48%",
+      range: [0.32, 0.68],
+      drift: { x: -70, y: -65 },
+      layer: 3,
+      caption: "The Details",
     },
     {
       url: "https://i.pinimg.com/1200x/b8/9c/5f/b89c5f5d181450d685871a21d76d60ae.jpg",
-      size: 480,
-      x: "10%",
-      y: "50%",
-      range: [0.5, 0.85],
-      drift: { x: 100, y: -90 },
+      size: 490,
+      x: "12%",
+      y: "52%",
+      range: [0.46, 0.80],
+      drift: { x: 80, y: -85 },
+      layer: 1,
+      caption: "First Dance",
     },
     {
       url: "https://i.pinimg.com/736x/2d/04/16/2d04167fb5b1b086548758f5f08bf8c4.jpg",
-      size: 380,
-      x: "65%",
-      y: "70%",
-      range: [0.6, 0.95],
-      drift: { x: -30, y: -120 },
+      size: 370,
+      x: "66%",
+      y: "68%",
+      range: [0.58, 0.88],
+      drift: { x: -35, y: -110 },
+      layer: 2,
+      caption: "Joy Unscripted",
     },
     {
       url: "https://i.pinimg.com/736x/3a/0e/0c/3a0e0c89e90e0caf232ca5f2bd30ea9d.jpg",
-      size: 400,
-      x: "25%",
-      y: "75%",
-      range: [0.75, 1.0],
-      drift: { x: 40, y: -90 },
+      size: 415,
+      x: "28%",
+      y: "72%",
+      range: [0.72, 0.96],
+      drift: { x: 45, y: -80 },
+      layer: 2,
+      caption: "Into the Night",
     },
     {
       url: "https://i.pinimg.com/736x/43/ea/c0/43eac0aed202d47c88a0715a1c56af64.jpg",
-      size: 520,
-      x: "60%",
-      y: "20%",
-      range: [0.8, 1.0],
-      drift: { x: -60, y: -150 },
+      size: 530,
+      x: "62%",
+      y: "22%",
+      range: [0.82, 1.0],
+      drift: { x: -50, y: -130 },
+      layer: 1,
+      caption: "Forever Begins",
     },
   ];
 
   return (
-    <section ref={containerRef} className="relative h-[800vh] bg-transparent">
-      {/* Sticky Tracker */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden pointer-events-none">
-        {/* Visual Watermark for Debugging & Aesthetic */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none">
-          <h2 className="text-[20vw] font-serif uppercase tracking-tighter leading-none dark:text-[#1a1a1a] text-black text-center select-none italic">
-            Archive
-          </h2>
-        </div>
+    <section ref={containerRef} style={{ position: "relative", height: "800vh", background: "transparent" }}>
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          width: "100%",
+          overflow: "hidden",
+          pointerEvents: "none",
+          background: "#ffffff",
+        }}
+      >
 
-        {/* Bubbles Render */}
-        <div className="relative h-full w-full">
-          {bubbles.map((bubble, i) => (
-            <Bubble key={i} config={bubble} progress={scrollYProgress} index={i} />
+        {/* Bubbles */}
+        <div style={{ position: "relative", width: "100%", height: "100%" }}>
+          {bubbles.map((b, i) => (
+            <Bubble key={i} config={b} progress={scrollYProgress} index={i} />
           ))}
         </div>
 
-        {/* Interactive Scroll Indicator */}
+        {/* Captions — only show the active one */}
+        {bubbles.map((b, i) => (
+          <Caption key={i} text={b.caption} progress={scrollYProgress} range={b.range} />
+        ))}
+
+        {/* Counter */}
+        <Counter progress={scrollYProgress} total={bubbles.length} bubbles={bubbles} />
+
+        {/* Scroll indicator */}
         <ScrollIndicator progress={scrollYProgress} />
+
+        {/* Section label — top left */}
+        <div
+          style={{
+            position: "absolute",
+            top: 40,
+            left: 36,
+            zIndex: 50,
+            pointerEvents: "none",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 9,
+              letterSpacing: "0.46em",
+              textTransform: "uppercase",
+              fontWeight: 600,
+              color: "rgba(0,0,0,0.18)",
+              fontFamily: "system-ui, sans-serif",
+            }}
+          >
+            Archive
+          </span>
+        </div>
       </div>
     </section>
   );

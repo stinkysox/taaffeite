@@ -11,20 +11,6 @@ import { siteContent } from "../data/siteContent";
 import { TextReveal } from "../components/TextReveal";
 import PremiumHero from "../components/PremiumHero";
 
-const AuroraBackground = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-60 dark:opacity-40">
-    <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-gold-400/20 dark:bg-gold-900/30 rounded-full aurora-blob" />
-    <div
-      className="absolute bottom-[-15%] right-[-5%] w-[70%] h-[70%] bg-orange-400/20 dark:bg-orange-950/25 rounded-full aurora-blob"
-      style={{ animationDelay: "-8s" }}
-    />
-    <div
-      className="absolute top-[10%] right-[5%] w-[60%] h-[60%] bg-rose-400/15 dark:bg-rose-900/20 rounded-full aurora-blob"
-      style={{ animationDelay: "-15s" }}
-    />
-    <div className="absolute inset-0 bg-black/10 /20 backdrop-blur-[4px]" />
-  </div>
-);
 
 export default function Home() {
   const { scrollY } = useScroll();
