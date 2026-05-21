@@ -6,15 +6,18 @@
   --color-gold-600: #aa8620;
 }
 
+
 /* Permanent Light Theme Foundation (White & Golden) */
 :root {
   --background-color: #ffffff;
   --text-color: #1a1a1a;
-  --foreground-secondary: #52525b; /* zinc-600 */
-  --foreground-muted: #71717a; /* zinc-500 */
+  --foreground-secondary: #52525b;
+  /* zinc-600 */
+  --foreground-muted: #71717a;
+  /* zinc-500 */
   --border-color: rgba(0, 0, 0, 0.08);
   --glass-bg: rgba(255, 255, 255, 0.8);
-  
+
   /* Typography Tokens */
   --para-tracking: 0.02em;
   --para-leading: 1.8;
@@ -40,7 +43,7 @@
     background-color: var(--background-color);
     color: var(--text-color);
     transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     width: 100%;
@@ -57,7 +60,12 @@
     -webkit-touch-callout: none;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-serif), serif;
     letter-spacing: -0.02em;
   }
@@ -113,22 +121,20 @@
     animation: aurora-shimmer 25s infinite ease-in-out;
     will-change: transform;
   }
-  
+
   .premium-para {
     @apply font-light tracking-[0.05em] leading-[2] text-zinc-600;
   }
-  
+
   .premium-label {
     @apply uppercase tracking-[0.4em] text-[10px] font-bold text-gold-600;
   }
 
   .shimmer {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%);
     background-size: 200% 100%;
     animation: shimmer 2s infinite linear;
   }
@@ -136,23 +142,51 @@
 
 /* Aurora Animation */
 @keyframes aurora-shimmer {
-  0% { transform: translate(-15%, -15%) rotate(0deg) scale(1); }
-  33% { transform: translate(15%, 5%) rotate(5deg) scale(1.1); }
-  66% { transform: translate(-5%, 15%) rotate(-5deg) scale(0.9); }
-  100% { transform: translate(-15%, -15%) rotate(0deg) scale(1); }
+  0% {
+    transform: translate(-15%, -15%) rotate(0deg) scale(1);
+  }
+
+  33% {
+    transform: translate(15%, 5%) rotate(5deg) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-5%, 15%) rotate(-5deg) scale(0.9);
+  }
+
+  100% {
+    transform: translate(-15%, -15%) rotate(0deg) scale(1);
+  }
 }
 
 /* Shimmer Animation */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(191, 155, 48, 0.3); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(191, 155, 48, 0.5); }
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(191, 155, 48, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(191, 155, 48, 0.5);
+}
 
 /* Cinematic Film Grain Overlay */
 body::before {

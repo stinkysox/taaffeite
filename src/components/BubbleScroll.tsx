@@ -62,7 +62,7 @@ const TitleFrame: React.FC<{
   const fadeIn = s + (mid - s) * 0.3;
   const fadeOut = mid + (e - mid) * 0.7;
 
-  // Slower, smoother fades to allow bubbles to overlap during the transition
+  // Slower, smoother transitions so bubbles drift comfortably through text phases
   const opacity = useTransform(
     progress,
     [s, fadeIn, fadeOut, e],
@@ -89,7 +89,7 @@ const TitleFrame: React.FC<{
         alignItems: "center",
         justifyContent: "center",
         pointerEvents: "none",
-        zIndex: 30, // Text stays above bubbles
+        zIndex: 30, // Elevated layout weight over drifting background nodes
         opacity,
       }}
     >
@@ -100,7 +100,7 @@ const TitleFrame: React.FC<{
           fontStyle: "italic",
           fontWeight: 700,
           fontSize: "clamp(56px, 9vw, 110px)",
-          color: "#111111",
+          color: "#1a1a1a",
           lineHeight: 1,
           margin: 0,
           userSelect: "none",
@@ -118,20 +118,20 @@ const TitleFrame: React.FC<{
           fontSize: "clamp(8px, 1vw, 10px)",
           letterSpacing: "0.45em",
           textTransform: "uppercase",
-          color: "#888888",
+          color: "#71717a",
           fontWeight: 500,
         }}
       >
         {sub}
       </motion.p>
 
-      {/* Thin gold rule matched to the reference image */}
+      {/* Elegant gold rule element mapping precisely to aesthetic sample */}
       <motion.div
         style={{
           opacity: subOpacity,
           width: 32,
           height: 1,
-          background: "#E5C158",
+          background: "#bf9b30",
           marginTop: 24,
         }}
       />
@@ -146,7 +146,6 @@ const CircularScrollIndicator: React.FC<{ progress: MotionValue<number> }> = ({ 
   useEffect(() => setMounted(true), []);
 
   const wrapperOpacity = useTransform(progress, [0, 0.02, 0.95, 1], [0, 1, 1, 0]);
-  // Rotate the dial based on overall scroll
   const rotation = useTransform(progress, [0, 1], [0, 360]);
   const sRotation = useSpring(rotation, { stiffness: 50, damping: 20 });
 
@@ -163,25 +162,22 @@ const CircularScrollIndicator: React.FC<{ progress: MotionValue<number> }> = ({ 
           letterSpacing: "0.4em",
           textTransform: "uppercase",
           fontWeight: 600,
-          color: "#E5C158",
+          color: "#bf9b30",
           fontFamily: "system-ui, sans-serif",
-          marginRight: "-0.4em", // optical alignment for wide letter spacing
+          marginRight: "-0.4em",
         }}
       >
         Scroll
       </span>
 
-      {/* The Dial graphic from the image */}
-      <div className="relative w-24 h-24 rounded-full bg-black/10 flex items-center justify-center backdrop-blur-sm border border-black/5">
-        {/* Inner concentric circle */}
+      {/* Precision design replica dial assembly */}
+      <div className="relative w-24 h-24 rounded-full bg-black/5 flex items-center justify-center backdrop-blur-sm border border-black/5">
         <div className="absolute inset-2 rounded-full border border-black/5" />
 
-        {/* Center hub */}
-        <div className="w-6 h-6 rounded-full bg-[#E5C158]/80 flex items-center justify-center shadow-sm">
+        <div className="w-6 h-6 rounded-full bg-[#bf9b30]/90 flex items-center justify-center shadow-sm">
           <div className="w-1.5 h-1.5 rounded-full bg-white" />
         </div>
 
-        {/* Rotating Arm */}
         <motion.div
           style={{ rotate: sRotation }}
           className="absolute inset-0 flex items-start justify-center pt-2 origin-center"
@@ -216,7 +212,7 @@ const SectionLabel: React.FC<{ progress: MotionValue<number> }> = ({ progress })
           letterSpacing: "0.4em",
           textTransform: "uppercase",
           fontWeight: 500,
-          color: "#A0A0A0",
+          color: "#71717a",
           fontFamily: "system-ui, sans-serif",
         }}
       >
@@ -274,7 +270,7 @@ const Bubble: React.FC<{
         width: size,
         height: size,
         transform: "translate(-50%, -50%)",
-        zIndex: 10 + config.layer, // Layers sit behind text (zIndex 30)
+        zIndex: 10 + config.layer, // Layers drift structurally beneath layout title strings (zIndex 30)
       }}
     >
       <motion.div
@@ -296,8 +292,8 @@ const Bubble: React.FC<{
             overflow: "hidden",
             position: "relative",
             boxShadow: `
-              0 24px 48px rgba(0,0,0,0.08),
-              0 8px 16px rgba(0,0,0,0.04)
+              0 24px 48px rgba(0,0,0,0.06),
+              0 8px 16px rgba(0,0,0,0.03)
             `,
           }}
         >
@@ -327,9 +323,29 @@ export const BubbleScroll: React.FC = () => {
     offset: ["start start", "end end"],
   });
 
-  // ── Overlapping Timeline Configuration ──
+  // ─── Navbar Syncing Controller Hook ───
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        document.documentElement.setAttribute(
+          "data-hide-nav",
+          entry.isIntersecting ? "true" : "false"
+        );
+      },
+      { threshold: 0 }
+    );
 
-  // Texts take up large, overlapping chunks of the scroll space
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.removeAttribute("data-hide-nav");
+    };
+  }, []);
+
+  // ─── Overlapping Timeline Structural Configurations ───
   const titleWords: TitleWord[] = [
     { word: "Cherished", sub: "Every beginning deserves a witness", range: [0.00, 0.30] },
     { word: "Crafted", sub: "Details that outlast the moment", range: [0.25, 0.55] },
@@ -337,7 +353,6 @@ export const BubbleScroll: React.FC = () => {
     { word: "Eternal", sub: "Where time quietly stops", range: [0.75, 1.00] },
   ];
 
-  // Bubbles start almost immediately and run concurrently with the text phases
   const bubbles: BubbleConfig[] = [
     {
       url: "https://i.pinimg.com/736x/b5/23/b3/b523b3e8a7410b20dedbac7491a528af.jpg",
@@ -391,13 +406,12 @@ export const BubbleScroll: React.FC = () => {
           width: "100%",
           overflow: "hidden",
           pointerEvents: "none",
-          background: "#FAFAFA", // Slight off-white to match the soft aesthetic
+          background: "var(--background-color)", // Integrated clean light theme hook base
         }}
       >
         <FilmBar progress={scrollYProgress} />
         <SectionLabel progress={scrollYProgress} />
 
-        {/* Text is rendered after bubbles in DOM, but managed via zIndex in styles anyway */}
         <div style={{ position: "absolute", inset: 0 }}>
           {bubbles.map((b, i) => (
             <Bubble key={`bubble-${i}`} config={b} progress={scrollYProgress} index={i} />
