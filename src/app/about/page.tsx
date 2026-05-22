@@ -42,7 +42,7 @@ export default function About() {
               duration: 1.8,
               ease: easeCustom,
             }}
-            className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-serif leading-[0.86] tracking-[-0.07em] text-[#111]"
+            className="text-[4rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-serif leading-[0.86] tracking-[-0.07em] text-[#111]"
           >
             {about.hero.title}
 

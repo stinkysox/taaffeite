@@ -9,9 +9,37 @@ export default function Book() {
   const [submitted, setSubmitted] = useState(false);
   const { book } = siteContent;
 
+  // ✅ FORM STATE
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    date: "",
+    type: "",
+    vision: "",
+  });
+
+  // ✅ WHATSAPP SUBMIT HANDLER
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+
+    const phoneNumber = "919148990266";
+
+    const message = encodeURIComponent(
+      `📸 New Booking Request
+
+Name: ${formData.name}
+Email: ${formData.email}
+Date: ${formData.date}
+Event Type: ${formData.type}
+Vision: ${formData.vision}
+
+Sent from website booking form`
+    );
+
+    setTimeout(() => {
+      window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    }, 700);
   };
 
   return (
@@ -25,9 +53,7 @@ export default function Book() {
           <h1 className="text-5xl md:text-7xl font-serif mb-6 text-[#1a1a1a]">
             {book.hero.title}
           </h1>
-          <p className="premium-label italic">
-            {book.hero.subtitle}
-          </p>
+          <p className="premium-label italic">{book.hero.subtitle}</p>
         </SectionWrapper>
 
         <SectionWrapper direction="up" delay={0.2}>
@@ -42,18 +68,24 @@ export default function Book() {
                   onSubmit={handleSubmit}
                   className="space-y-8"
                 >
+                  {/* NAME + EMAIL */}
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-2">
-                       <label className="text-xs uppercase tracking-widest opacity-60">
+                      <label className="text-xs uppercase tracking-widest opacity-60">
                         {book.form.name}
                       </label>
                       <input
                         required
                         type="text"
                         placeholder="John Doe"
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
                         className="w-full bg-transparent border-b border-black/20 py-4 focus:border-gold-600 outline-none transition-colors text-[#1a1a1a] placeholder:text-gray-700"
                       />
                     </div>
+
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest opacity-60">
                         {book.form.email}
@@ -62,11 +94,16 @@ export default function Book() {
                         required
                         type="email"
                         placeholder="john@example.com"
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
                         className="w-full bg-transparent border-b border-black/20 py-4 focus:border-gold-600 outline-none transition-colors text-[#1a1a1a] placeholder:text-gray-700"
                       />
                     </div>
                   </div>
 
+                  {/* DATE + TYPE */}
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest opacity-60">
@@ -75,54 +112,52 @@ export default function Book() {
                       <input
                         required
                         type="date"
+                        value={formData.date}
+                        onChange={(e) =>
+                          setFormData({ ...formData, date: e.target.value })
+                        }
                         className="w-full bg-transparent border-b border-black/20 py-4 focus:border-gold-600 outline-none transition-colors text-[#1a1a1a] [color-scheme:dark]"
                       />
                     </div>
+
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest opacity-60">
                         {book.form.type}
                       </label>
-                      <div className="relative">
-                        <select className="w-full bg-black/20 border-b border-black/20 py-4 px-4 focus:border-gold-600 outline-none transition-colors appearance-none cursor-pointer text-[#1a1a1a] rounded-t-lg backdrop-blur-sm">
-                          {book.eventTypes.map((type) => (
-                            <option
-                              key={type.value}
-                              value={type.value}
-                              className="bg-gray-900 text-[#1a1a1a]"
-                            >
-                              {type.label}
-                            </option>
-                          ))}
-                        </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                          <svg
-                            className="w-4 h-4 text-gray-500"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        </div>
-                      </div>
+
+                      <select
+                        value={formData.type}
+                        onChange={(e) =>
+                          setFormData({ ...formData, type: e.target.value })
+                        }
+                        className="w-full bg-black/20 border-b border-black/20 py-4 px-4 focus:border-gold-600 outline-none transition-colors appearance-none cursor-pointer text-[#1a1a1a] rounded-t-lg backdrop-blur-sm"
+                      >
+                        <option value="">Select Event Type</option>
+                        {book.eventTypes.map((type) => (
+                          <option key={type.value} value={type.value}>
+                            {type.label}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 
+                  {/* VISION */}
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest opacity-60">
                       {book.form.vision}
                     </label>
                     <textarea
                       placeholder="Describe the mood, location, and your story..."
+                      value={formData.vision}
+                      onChange={(e) =>
+                        setFormData({ ...formData, vision: e.target.value })
+                      }
                       className="w-full bg-transparent border-b border-black/20 py-4 h-32 focus:border-gold-600 outline-none transition-colors resize-none text-[#1a1a1a] placeholder:text-gray-700"
                     />
                   </div>
 
+                  {/* TERMS */}
                   <div className="flex items-start gap-4 py-4 text-xs text-gray-500">
                     <input
                       type="checkbox"
@@ -131,14 +166,27 @@ export default function Book() {
                     />
                     <p className="leading-relaxed">
                       I agree to the processing of my details as per the{" "}
-                      <a href="/privacy-policy" className="text-gold-600 underline">Privacy Policy</a> and{" "}
-                      <a href="/terms-of-service" className="text-gold-600 underline">Terms of Service</a>.
+                      <a
+                        href="/privacy-policy"
+                        className="text-gold-600 underline"
+                      >
+                        Privacy Policy
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        href="/terms-of-service"
+                        className="text-gold-600 underline"
+                      >
+                        Terms of Service
+                      </a>
+                      .
                     </p>
                   </div>
 
+                  {/* SUBMIT */}
                   <button
                     type="submit"
-                    className="w-full py-5 rounded-full bg-gold-600 text-[#1a1a1a] uppercase tracking-[0.2em] font-bold text-sm glow-button transition-all hover:bg-gold-500"
+                    className="w-full py-5 rounded-full bg-gold-600 text-[#1a1a1a] uppercase tracking-[0.2em] font-bold text-sm transition-all hover:bg-gold-500"
                   >
                     {book.form.submit}
                   </button>
@@ -165,12 +213,15 @@ export default function Book() {
                       <path d="M20 6 9 17l-5-5" />
                     </svg>
                   </div>
+
                   <h2 className="text-4xl font-serif mb-4 text-[#1a1a1a]">
                     {book.form.successTitle}
                   </h2>
-                  <p className="premium-para max-w-sm mx-auto !text-zinc-500">
+
+                  <p className="max-w-sm mx-auto text-zinc-500">
                     {book.form.successMessage}
                   </p>
+
                   <button
                     onClick={() => setSubmitted(false)}
                     className="mt-8 text-sm uppercase tracking-widest underline underline-offset-8 hover:text-gold-600 transition-colors"

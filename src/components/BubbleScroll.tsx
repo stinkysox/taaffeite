@@ -11,6 +11,12 @@ import {
 } from "framer-motion";
 
 // ─────────────────────────────────────────────────────────────
+// FONT NOTE
+// Add in globals.css:
+// @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+// ─────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────
 // THEME
 // ─────────────────────────────────────────────────────────────
 
@@ -151,10 +157,26 @@ const Chapter = ({ item, progress }: any) => {
     >
       <h2
         style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontStyle: "italic",
-          fontSize: "clamp(54px,9vw,120px)",
-          color: SITE_THEME.text,
+          fontFamily: "'Pinyon Script', cursive",
+          fontSize: "clamp(50px,8vw,100px)",
+          fontWeight: 500,
+          letterSpacing: "0.02em",
+          lineHeight: 1.2,
+
+          paddingTop: "10px",
+          paddingBottom: "20px",
+
+          // 👇 ADD THESE TO PREVENT THE CHOPPING
+          paddingLeft: "0.15em",
+          paddingRight: "0.6em",
+
+          background:
+            "linear-gradient(135deg, #f6e27a 0%, #c9a84c 40%, #8a6b1f 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+
+          textShadow:
+            "0 0 20px rgba(201, 168, 76, 0.25), 0 10px 40px rgba(0,0,0,0.15)",
         }}
       >
         {item.word}
@@ -223,7 +245,6 @@ const Bubble = ({ config, progress, mouseX, mouseY, velocity }: any) => {
     [-config.layer * 8, config.layer * 8]
   );
 
-  // ✅ FIXED (production-safe)
   const combinedX = useTransform([driftX, parallaxX], (latest) => {
     const [a, b] = latest as number[];
     return a + b;
@@ -321,24 +342,8 @@ export const BubbleScroll = () => {
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      const shouldHide = latest > 0.01 && latest < 0.98;
-
-      document.documentElement.setAttribute(
-        "data-hide-nav",
-        shouldHide ? "true" : "false"
-      );
-    });
-
-    return () => {
-      unsubscribe();
-      document.documentElement.setAttribute("data-hide-nav", "false");
-    };
-  }, [scrollYProgress]);
-
   return (
-    <section ref={ref} className="relative h-[800vh] bg-white" style={{ position: "relative" }}>
+    <section ref={ref} className="relative h-[800vh] bg-white">
       <motion.div className="sticky top-0 h-screen overflow-hidden bg-white">
         {BUBBLES.map((b, i) => (
           <Bubble

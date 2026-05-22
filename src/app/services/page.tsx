@@ -111,7 +111,7 @@ export default function Services() {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   viewport={{ once: true }}
-                  className="font-serif text-[4.5rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] leading-[0.88] tracking-[-0.07em] text-[#111]"
+                  className="font-serif text-[4.2rem] sm:text-[5rem] md:text-[7rem] lg:text-[10rem] leading-[0.88] tracking-[-0.07em] text-[#111]"
                 >
                   <span className="block">
                     {services.hero.title}
@@ -249,8 +249,8 @@ function ServiceCard({
         margin: "-10%",
       }}
       className={`grid lg:grid-cols-2 gap-12 items-start ${align === "right"
-          ? "lg:[&>*:first-child]:order-2"
-          : ""
+        ? "lg:[&>*:first-child]:order-2"
+        : ""
         }`}
     >
       {/* Giant Number */}
