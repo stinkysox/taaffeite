@@ -68,7 +68,7 @@ export const CustomCursor: React.FC = () => {
           width: cursorType === "hover" ? 60 : cursorType === "image" ? 100 : 30,
           height: cursorType === "hover" ? 60 : cursorType === "image" ? 100 : 30,
           opacity: cursorType === "default" ? 0.4 : 0.8,
-          backgroundColor: cursorType === "image" ? "rgba(202, 138, 4, 0.1)" : "transparent",
+          backgroundColor: cursorType === "image" ? "rgba(202, 138, 4, 0.1)" : "rgba(0, 0, 0, 0)",
         }}
         style={{
           x: cursorX,

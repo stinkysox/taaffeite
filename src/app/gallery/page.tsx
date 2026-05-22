@@ -185,8 +185,8 @@ export default function Gallery() {
                   key={cat}
                   onClick={() => setFilter(cat)}
                   className={`group relative overflow-hidden rounded-full border px-7 py-3 transition-all duration-700 ${isActive
-                      ? "border-[#111] bg-[#111]"
-                      : "border-black/10 bg-white/60 backdrop-blur-xl hover:border-black/30"
+                    ? "border-[#111] bg-[#111]"
+                    : "border-black/10 bg-white/60 backdrop-blur-xl hover:border-black/30"
                     }`}
                 >
                   <span
@@ -434,7 +434,6 @@ export default function Gallery() {
                 src={selectedImage.imageUrl}
                 alt={selectedImage.title}
                 fill
-                unoptimized
                 className="object-contain"
               />
 

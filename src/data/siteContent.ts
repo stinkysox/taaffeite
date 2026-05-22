@@ -50,7 +50,7 @@ export const siteContent = {
       linkText: "About Taaffeite",
       linkUrl: "/about",
       image:
-        "https://i.pinimg.com/736x/79/21/c2/7921c220ea25456868c005d8b4ef808c.jpg",
+        "https://i.postimg.cc/QVLk6VML/WEVA1312-2.jpg",
     },
 
     essence: {
@@ -111,7 +111,7 @@ export const siteContent = {
       text2:
         "Named after one of the rarest gemstones in the world, Taaffeite represents individuality, quiet luxury, and timeless elegance — values that shape every event we curate.",
       image:
-        "https://i.pinimg.com/736x/f5/94/d1/f594d17e5bcd98234cd36a48f5b56a9a.jpg",
+        "https://i.postimg.cc/D0WtBdsJ/0008.jpg",
       stats: [
         { value: "Bespoke", label: "Event Experiences" },
         { value: "Luxury", label: "With Intention" },
@@ -182,11 +182,12 @@ export const siteContent = {
         },
       ],
       images: [
-        "https://i.pinimg.com/736x/d8/d5/43/d8d54316260cb253a6eb6401deec675c.jpg",
-        "https://i.pinimg.com/736x/2b/97/ea/2b97ea83cdaeb04c71ef69c1ce81bb9f.jpg",
+        "  https://i.postimg.cc/Mp6tgMYs/AKR07499.jpg",
+        "https://i.postimg.cc/xTytsyL3/Sanhita-Benny-19-2.jpg",
       ],
     },
   },
+
 
   services: {
     hero: {

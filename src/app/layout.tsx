@@ -22,9 +22,6 @@ export const metadata: Metadata = {
   keywords: "luxury wedding planner, wedding planner Bangalore, bespoke celebrations, destination wedding planner India, premium event curation, Taaffeite Events",
   authors: [{ name: "Taaffeite Events" }],
   robots: "index, follow",
-  verification: {
-    google: "b0fe91c686917fde",
-  },
   alternates: {
     canonical: "https://www.taaffeite.com",
   },
@@ -98,16 +95,17 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Updated Icon Link */}
         <link
           rel="icon"
-          type="image/jpeg"
-          href="https://i.pinimg.com/736x/ad/42/2d/ad422d9d993dfb6697b437b06dcd0cb3.jpg"
+          type="image/png"
+          href="/tafflogo.png"
         />
       </head>
       <body

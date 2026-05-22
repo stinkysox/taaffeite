@@ -213,27 +213,68 @@ export default function About() {
       </section>
 
       {/* THE ARCHIVE */}
-      <section className="bg-[#f0ece4] text-[#111] py-32 px-6 md:px-16 relative z-10 overflow-hidden mb-56 rounded-[3rem] mx-4 md:mx-12 max-w-[1440px] xl:mx-auto shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-[#e0d9cc]">
-        {/* Warm glow behind */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#d4af37]/8 blur-[120px] pointer-events-none" />
+      <section className="bg-[#f0ece4] text-[#111] py-20 md:py-32 px-6 md:px-16 relative z-10 overflow-hidden mb-32 md:mb-56 rounded-[2rem] md:rounded-[3rem] mx-4 md:mx-12 max-w-[1440px] xl:mx-auto shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-[#e0d9cc]">
 
-        <div className="grid lg:grid-cols-12 gap-20 items-center relative z-10">
+        {/* Warm glow behind */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#d4af37]/10 blur-[120px] pointer-events-none" />
+
+        <div className="grid lg:grid-cols-12 gap-16 md:gap-20 items-center relative z-10">
+
+          {/* IMAGES SIDE - UNIFIED FOR MOBILE & DESKTOP */}
+          <div className="lg:col-span-6 w-full">
+            <div className="relative h-[350px] sm:h-[450px] md:h-[550px] w-full max-w-[500px] mx-auto lg:mx-0">
+
+              {/* Background Image (Left Layered Box) */}
+              <motion.div
+                className="absolute left-0 bottom-4 w-[55%] h-[80%] rounded-[1.75rem] md:rounded-[2.5rem] overflow-hidden border border-[#e0d9cc] z-10 shadow-[0_15px_45px_rgba(0,0,0,0.07)]"
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <img
+                  src={about.archive.images[0]}
+                  className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700"
+                  alt="Archive 1"
+                />
+              </motion.div>
+
+              {/* Foreground Image (Right Layered Elevated Box) */}
+              <motion.div
+                className="absolute right-0 top-0 w-[55%] h-[80%] rounded-[1.75rem] md:rounded-[2.5rem] overflow-hidden border border-[#e0d9cc] z-20 shadow-[0_25px_55px_rgba(0,0,0,0.1)]"
+                initial={{ y: 100, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <img
+                  src={about.archive.images[1]}
+                  className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700"
+                  alt="Archive 2"
+                />
+              </motion.div>
+            </div>
+          </div>
+
           {/* TEXT SIDE */}
-          <div className="lg:col-span-6 space-y-16">
-            <h2 className="text-5xl md:text-7xl font-serif italic text-[#111] tracking-tight">
+          <div className="lg:col-span-6 space-y-12 md:space-y-16">
+            <h2 className="text-4xl md:text-7xl font-serif italic tracking-tight">
               {about.archive.title}
             </h2>
-            <div className="space-y-12">
+
+            <div className="space-y-10 md:space-y-12">
               {about.archive.items.map((item, i) => (
-                <div key={i} className="flex gap-8 items-start group">
-                  <span className="text-xl font-serif italic text-[#c6a769] mt-1">
+                <div key={i} className="flex gap-6 md:gap-8 items-start group">
+                  <span className="text-lg md:text-xl font-serif italic text-[#c6a769] mt-1">
                     {item.step}
                   </span>
+
                   <div>
-                    <h3 className="text-2xl font-serif mb-3 text-[#111] group-hover:text-[#c6a769] transition-colors">
+                    <h3 className="text-xl md:text-2xl font-serif mb-2 md:mb-3 group-hover:text-[#c6a769] transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-zinc-500 font-light leading-relaxed max-w-md">
+
+                    <p className="text-zinc-500 font-light leading-relaxed max-w-md text-sm md:text-base">
                       {item.desc}
                     </p>
                   </div>
@@ -242,54 +283,8 @@ export default function About() {
             </div>
           </div>
 
-          {/* IMAGES SIDE */}
-          <div className="lg:col-span-6 relative h-[600px] w-full hidden md:block">
-            <motion.div
-              className="absolute top-0 right-10 w-3/5 h-4/5 rounded-[2.5rem] overflow-hidden border border-[#e0d9cc] z-10 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
-            >
-              <img
-                src={about.archive.images[0]}
-                className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700"
-                alt="Archive 1"
-              />
-            </motion.div>
-            <motion.div
-              className="absolute bottom-0 left-0 w-3/5 h-4/5 rounded-[2.5rem] overflow-hidden border border-[#e0d9cc] z-20 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
-              initial={{ y: 100, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.2 }}
-            >
-              <img
-                src={about.archive.images[1]}
-                className="w-full h-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700"
-                alt="Archive 2"
-              />
-            </motion.div>
-
-            {/* Decorative gold ring accent */}
-            <motion.div 
-               initial={{ rotate: 0 }}
-               animate={{ rotate: 360 }}
-               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-               className="absolute -bottom-8 -right-8 w-40 h-40 opacity-30 pointer-events-none z-30"
-            >
-              <div className="w-full h-full rounded-full border border-[#c6a769]/30 bg-[#f0ece4] flex items-center justify-center relative shadow-lg">
-                <div className="w-[90%] h-[90%] rounded-full border border-[#c6a769]/20"></div>
-                <div className="w-[80%] h-[80%] rounded-full border border-[#c6a769]/15 absolute"></div>
-                <div className="w-[70%] h-[70%] rounded-full border border-[#c6a769]/10 absolute"></div>
-                <div className="w-12 h-12 rounded-full bg-[#c6a769]/60 shadow-[0_0_15px_rgba(198,167,105,0.3)] z-10"></div>
-                <div className="w-3 h-3 rounded-full bg-[#f0ece4] absolute z-20"></div>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
-
       {/* CTA */}
       <SectionWrapper className="text-center max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
         <h2 className="text-5xl sm:text-6xl md:text-7xl font-serif mb-16 tracking-[-0.04em] max-w-5xl mx-auto leading-[0.95] text-[#111]">
