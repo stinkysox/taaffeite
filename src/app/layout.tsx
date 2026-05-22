@@ -18,7 +18,9 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://www.taaffeite.com";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 const OG_IMAGE = `${SITE_URL}/tafflogo.png`;
 
 export const metadata: Metadata = {
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Taaffeite Events | Luxury Wedding Planning",
     description:
-      "Thoughtfully curated celebrations shaped by emotion, elegance, and intentional design in Bangalore and beyond.",
+      "Thoughtfully curated celebrations shaped by emotion, elegance, and intentional design.",
     type: "website",
     url: SITE_URL,
     siteName: "Taaffeite Events",
@@ -116,7 +118,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        {/* JSON-LD for SEO */}
+        {/* Fallback OG tags (IMPORTANT for WhatsApp / iMessage) */}
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:type" content="website" />
+
+        {/* JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -137,9 +145,7 @@ export default function RootLayout({
 
         <div className="flex flex-col min-h-screen relative">
           <Navbar />
-
           <main className="flex-grow">{children}</main>
-
           <Footer />
         </div>
 
