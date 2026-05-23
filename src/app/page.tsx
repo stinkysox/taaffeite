@@ -72,31 +72,111 @@ export default function Home() {
       </div>
 
       {/* WHY US CARDS */}
-      <section className="py-40 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
+      <section className="relative overflow-hidden px-6 py-40">
+        {/* Ambient background */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#C6A769]/10 blur-[140px]" />
 
-          {home.servicesPreview.map((item, idx) => (
-            <SectionWrapper key={idx} direction="up" delay={idx * 0.2}>
-              <div className="p-16 rounded-[3rem] glass border border-black/5 h-full flex flex-col items-center text-center group hover:bg-gold-600/5 transition-all duration-700 shadow-sm hover:shadow-xl">
+          <div className="absolute bottom-[-10rem] left-[-8rem] h-[320px] w-[320px] rounded-full bg-[#e7d8bc]/20 blur-[120px]" />
 
-                <div className="w-16 h-16 rounded-full border border-gold-600/20 flex items-center justify-center mb-10 group-hover:bg-gold-600 group-hover:text-[#1a1a1a] transition-all duration-500">
-                  <span className="font-serif italic text-2xl dark:text-[#1a1a1a] group-hover:text-[#1a1a1a]">
-                    {idx + 1}
-                  </span>
-                </div>
+          <div className="absolute right-[-6rem] top-1/2 h-[260px] w-[260px] -translate-y-1/2 rounded-full bg-stone-200/40 blur-[120px]" />
+        </div>
 
-                <h3 className="text-3xl font-serif mb-6 italic tracking-tight text-[#1a1a1a]">
-                  {item.title}
-                </h3>
 
-                <p className="premium-para text-xs uppercase !leading-relaxed">
-                  {item.desc}
+
+        <div className="relative z-10 mx-auto max-w-7xl">
+          {/* Top heading */}
+          <SectionWrapper direction="up">
+            <div className="mb-24 text-center">
+              <div className="mb-6 flex items-center justify-center gap-4">
+                <div className="h-px w-12 bg-zinc-300" />
+
+                <p className="text-[10px] uppercase tracking-[0.45em] text-zinc-500">
+                  Signature Experiences
                 </p>
 
+                <div className="h-px w-12 bg-zinc-300" />
               </div>
-            </SectionWrapper>
-          ))}
 
+              <h2 className="font-serif text-[clamp(3rem,5vw,5rem)] leading-[0.95] tracking-[-0.04em] text-[#1a1a1a]">
+                Crafted With
+                <span className="ml-4 italic text-[#C6A769]">
+                  Emotion
+                </span>
+              </h2>
+            </div>
+          </SectionWrapper>
+
+          {/* Cards */}
+          <div className="grid gap-10 md:grid-cols-3">
+            {home.servicesPreview.map((item, idx) => (
+              <SectionWrapper key={idx} direction="up" delay={idx * 0.18}>
+                <div className="group relative h-full overflow-hidden rounded-[2.8rem] border border-black/5 bg-white/70 p-[1px] backdrop-blur-xl transition-all duration-700 hover:-translate-y-3 hover:shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
+
+                  {/* Glow */}
+                  <div className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+                    <div className="absolute left-1/2 top-0 h-40 w-40 -translate-x-1/2 rounded-full bg-[#C6A769]/20 blur-[70px]" />
+                  </div>
+
+                  {/* Inner */}
+                  <div className="relative flex h-full flex-col rounded-[2.8rem] bg-[#fcfbf8]/95 p-12">
+
+                    {/* Floating number */}
+                    <div className="mb-14 flex items-center justify-between">
+
+                      <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-[#C6A769]/20 bg-white shadow-sm">
+
+                        {/* rotating ring */}
+                        <div className="absolute inset-0 animate-[spin_12s_linear_infinite] rounded-full border border-dashed border-[#C6A769]/30" />
+
+                        <span className="relative z-10 font-serif text-2xl italic text-[#C6A769]">
+                          0{idx + 1}
+                        </span>
+                      </div>
+
+                      <div className="h-px flex-1 ml-6 bg-gradient-to-r from-[#C6A769]/30 to-transparent" />
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-serif text-[2rem] leading-tight tracking-[-0.03em] text-[#1a1a1a] transition-all duration-500 group-hover:translate-x-1">
+                      {item.title}
+                    </h3>
+
+                    {/* Accent */}
+                    <div className="my-8 flex items-center gap-3">
+                      <div className="h-[6px] w-[6px] rounded-full bg-[#C6A769]" />
+                      <div className="h-px w-20 bg-[#C6A769]/30" />
+                    </div>
+
+                    {/* Description */}
+                    <p className="premium-para text-[13px] uppercase tracking-[0.18em] !leading-[2.2] text-zinc-500">
+                      {item.desc}
+                    </p>
+
+                    {/* Bottom hover reveal */}
+                    <div className="mt-auto pt-14">
+                      <div className="overflow-hidden">
+                        <div className="translate-y-6 opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100">
+
+                          <div className="flex items-center gap-4">
+                            <span className="text-[10px] uppercase tracking-[0.45em] text-[#C6A769]">
+                              Explore Service
+                            </span>
+
+                            <div className="h-px w-10 bg-[#C6A769]" />
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Corner detail */}
+                    <div className="absolute bottom-6 right-6 h-14 w-14 rounded-full border border-[#C6A769]/10 opacity-40 transition-all duration-700 group-hover:scale-125 group-hover:opacity-100" />
+                  </div>
+                </div>
+              </SectionWrapper>
+            ))}
+          </div>
         </div>
       </section>
 
