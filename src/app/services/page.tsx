@@ -140,7 +140,7 @@ export default function Services() {
             >
               <div className="aspect-[4/5] sm:aspect-[14/17] lg:aspect-[4/5] overflow-hidden rounded-[3.5rem] relative shadow-[0_30px_100px_rgba(0,0,0,0.08)] bg-stone-100 group">
                 <Image
-                  src={services.hero.image || "https://i.postimg.cc/nVTTMQyK/AKR05567.jpg"}
+                  src= {  "https://i.postimg.cc/nVTTMQyK/AKR05567.jpg"}
                   alt="Our Premium Services Overview"
                   fill
                   priority
