@@ -15,7 +15,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { GALLERY_DATA } from "../../data/gallery";
+import { GALLERY_DATA } from "@/data/gallery";
 
 const CATEGORIES = [
   "All",
@@ -67,7 +67,7 @@ export default function Gallery() {
 
   return (
     <>
-      <main id="gallery" className="relative min-h-screen overflow-hidden bg-[#faf8f4]">
+      <main className="relative min-h-screen overflow-hidden bg-[#faf8f4]">
         {/* Ambient Blobs */}
         <motion.div
           style={{
